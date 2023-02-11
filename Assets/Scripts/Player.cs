@@ -107,4 +107,9 @@ public class Player : MoveableEntity
         //Dont do this at home kids
         throw new System.Exception("Shouldnt Call Sleep On Player");
     }
+
+    public override bool getPassable(bool CanPassthroughZombies)
+    {
+        return true;
+    }
 }
