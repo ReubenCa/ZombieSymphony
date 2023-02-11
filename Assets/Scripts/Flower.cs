@@ -21,7 +21,10 @@ public class Flower : ImmovableEntity
     void Start()
     {
         base.Init();
-        //TODO randdomise Position Slightly
+        float xOffset = Random.Range(-0.35f, 0.35f);
+        float yOffset = Random.Range(-0.35f, 0.35f);
+        gameObject.transform.position = new Vector3(gameObject.transform.position.x + xOffset
+            , gameObject.transform.position.y + yOffset, 0);
     }
 
     // Update is called once per frame
