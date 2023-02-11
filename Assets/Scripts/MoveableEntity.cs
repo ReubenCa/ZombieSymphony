@@ -26,7 +26,7 @@ public abstract class MoveableEntity : Entity
     int DestinationX;
     int DestinationY;
     public float TimeToMove;
-    private MoveableEntityState State = MoveableEntityState.Idle;
+    protected MoveableEntityState State = MoveableEntityState.Idle;
 
     public override bool getPassable()
     {
@@ -45,7 +45,8 @@ public abstract class MoveableEntity : Entity
     public enum MoveableEntityState
     {
         Moving,
-        Idle
+        Idle,
+        ZombieSpawning
     }
 
     // Update is called once per frame
@@ -58,9 +59,12 @@ public abstract class MoveableEntity : Entity
                 IdleUpdate(); break;
             case MoveableEntityState.Moving:
                 MovingUpdate(); break;
+            case MoveableEntityState.ZombieSpawning:
+                ZombieSpawningUpdate(); break;
         }
     }
 
+    abstract public void ZombieSpawningUpdate();
     abstract public void IdleUpdate();
     
     public void MovingUpdate()
