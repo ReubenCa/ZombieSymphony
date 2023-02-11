@@ -12,6 +12,12 @@ public abstract class MoveableEntity : Entity
     public int x { protected set; get; }
     public int y { protected set; get; }
 
+    public enum Directions{
+        left,
+        right
+    }
+    private Directions DirectionFacing = Directions.right;
+
     float CurrentMovementX;
     float CurrentMovementY;
     int MoveStartX;
@@ -84,6 +90,10 @@ public abstract class MoveableEntity : Entity
 
     public bool TryScheduleMove(int DestX, int DestY)
     {
+        if (!Navigator.TilesareNeighbors((DestX,DestY),(x,y)))
+        {
+            throw new System.Exception("Tiles not neighbors");
+        }
         Debug.Assert(State != MoveableEntityState.Moving);
         if((DestX == x) == (DestY ==y))
         {
@@ -98,20 +108,34 @@ public abstract class MoveableEntity : Entity
         TerrainManager.Instance.EntityMoving(this, DestX, DestY);
         DestinationX= DestX;
         DestinationY = DestY;
-        Debug.Log("Move Scheduled");
+       // Debug.Log("Move Scheduled");
         State = MoveableEntityState.Moving;
         MoveStartX = x;
         MoveStartY = y;
         x = DestX;
         y = DestY;
 
-
-        Zombie.PlayerX = x;
-        Zombie.PlayerY = y;
-
         return true;
     }
 
-    
+    public void UpdateLeftRight(){
+        float xScale=transform.localScale.x;
+        if (xScale>0&&DirectionFacing==Directions.left){
+            //Should be facing left 
+            xScale*=-1;
+        }
+        else if(xScale<0&&DirectionFacing==Directions.right){
+            //Should be facing right 
+            xScale*=-1;
+        }
+        transform.localScale=new Vector3(xScale,transform.localScale.y,transform.localScale.z);
+    }
+
+    public void faceLeft(){
+        DirectionFacing=Directions.left;
+    }
+    public void faceRight(){
+        DirectionFacing=Directions.right;
+    }
     
 }
