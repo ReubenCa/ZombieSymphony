@@ -23,12 +23,25 @@ public class Zombie : MoveableEntity
     }
     private void Start()
     {
+        base.Init();
         PlayerAnimator=GetComponent<Animator>();
+        Invoke("rise",0.01f);
+    }
+    private void rise(){
         State = MoveableEntityState.ZombieSpawning;
         OriginalY = gameObject.transform.position.y - DistancetoRise;
         gameObject.transform.position = new Vector3(gameObject.transform.position.x,
             OriginalY - DistancetoRise, gameObject.transform.position.z);
         Mask.gameObject.SetActive(true);
+        //Find Grave
+        foreach (Entity possibleGrave in TerrainManager.Instance.GetTerrainTile(x,y))
+        {
+            Debug.Log(possibleGrave);
+            if(possibleGrave.gameObject.tag=="grave"){
+                possibleGrave.gameObject.GetComponentInChildren<Animator>().Play("GraveExplosion");
+                Debug.Log("PLayed");
+            }
+        }
     }
 
   

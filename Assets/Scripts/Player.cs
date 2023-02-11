@@ -13,6 +13,7 @@ public class Player : MoveableEntity
     }
     void Start(){
         PlayerAnimator=GetComponent<Animator>();
+        Init();
     }
     
 
