@@ -12,8 +12,8 @@ public abstract class ImmovableEntity : Entity
     int Width;
 
 
-    protected int BottomLeftX;
-    protected int BottomLeftY;
+    public int BottomLeftX { private set; get; }
+    public int BottomLeftY { private set; get; }
 
     public new void Init()
     {

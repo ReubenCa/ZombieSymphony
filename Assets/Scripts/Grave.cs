@@ -11,6 +11,7 @@ public class Grave : ImmovableEntity
 
     private void Start()
     {
+        GameManager.instance.AllGraves.Add(this);
         base.Init();
     }
 }

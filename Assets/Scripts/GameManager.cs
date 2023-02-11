@@ -1,19 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-   public static GameManager instance;
+    public static GameManager instance;
 
     private void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
             throw new System.Exception("Multiple Game Managers");
         }
         instance = this;
+        AllGraves = new List<Grave>();
     }
+
+
+    public List<Grave> AllGraves { private set; get;}
 
     [SerializeField]
     private GameObject FlowerPrefab;
@@ -53,8 +58,34 @@ public class GameManager : MonoBehaviour
     float flowerspawntimer = 0f;
     [SerializeField]
     float LifeRegenRate;
+
+    [SerializeField]
+    float BaseMinZombieSpawn;
+
+    public void ZombieDied()
+    {
+        ZombiesAlive--;
+    }
+
+    [SerializeField]
+    float BaseMaxZombieSpawn;
+
+    [SerializeField]
+    bool SpawnZombies = true;
+    float timesincelastzombiespawn = 0f;
+    float NextSpawnCriteria = 0f;
+    int ZombiesAlive = 0;
     void Update()
     {
+        timesincelastzombiespawn += Time.deltaTime / (ZombiesAlive + 1);
+        //new List<float> { 1f,2f}
+        if(ZombiesAlive == 0 || timesincelastzombiespawn > NextSpawnCriteria)
+        {
+            SpawnZombie();
+            timesincelastzombiespawn = 0;
+            NextSpawnCriteria = Random.Range(BaseMinZombieSpawn, BaseMaxZombieSpawn);
+        }
+
         Lives = Mathf.Min(Lives + LifeRegenRate * Time.deltaTime, 3f);
 
         if (!SpawnFlowers)
@@ -69,10 +100,14 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    [SerializeField]
     GameObject ZombiePrefab;
-    public void SpawnZombie(int x, int y)
+    public void SpawnZombie()
     {
-       Instantiate(ZombiePrefab, new Vector3((float)x,(float)y,0), Quaternion.identity);
+        ZombiesAlive++;
+        Grave spawngrave = AllGraves[Random.Range(0, AllGraves.Count)];
+
+       Instantiate(ZombiePrefab, new Vector3((float)spawngrave.BottomLeftX,(float)spawngrave.BottomLeftY,0), Quaternion.identity);
         
     }
     

@@ -322,8 +322,8 @@ MonoBehaviour:
   TimeToMove: 1
   Mask: {fileID: 5978586408199990759}
   TimeBetweenMoves: 0.5
-  MinTimeToSleep: 7
-  MaxTimeToSleep: 12
+  MinTimeToSleep: 3
+  MaxTimeToSleep: 25
   MinTimeSleeping: 10
   MaxTimeSleeping: 15
   NoWakeUpDistance: 3

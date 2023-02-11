@@ -188,6 +188,7 @@ public class Zombie : MoveableEntity
             Debug.Log("player not biting");
             return;
         }
+        GameManager.instance.ZombieDied();
         TerrainManager.Instance.ClearFromTile(x, y, this);
         Destroy(gameObject);
     }
