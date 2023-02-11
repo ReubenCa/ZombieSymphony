@@ -9,9 +9,11 @@ using Unity.VisualScripting;
 
 public class Zombie : MoveableEntity
 {
+    private Animator PlayerAnimator;
     private void Update()
     {
         base.MoveableEntityUpdate();
+        base.UpdateLeftRight();
     }
     private void Start()
     {
@@ -20,7 +22,9 @@ public class Zombie : MoveableEntity
         {
             Debug.Log(p);
         }
+        PlayerAnimator=GetComponent<Animator>();
     }
+
     [NonSerialized]
     public static int PlayerX;
     [NonSerialized]
@@ -40,7 +44,24 @@ public class Zombie : MoveableEntity
             MovesUntilUpdate = TargetUpdateFrequency;
         }
         (int,int) NextMove = MovementQueue.Dequeue();
-        TryScheduleMove(NextMove.Item1, NextMove.Item2);
+        bool moveSuccessful = TryScheduleMove(NextMove.Item1, NextMove.Item2);
+        //Update Facing Position - David
+        //TODO
+        Debug.Log("moved");
+        if(moveSuccessful){
+            PlayerAnimator.Play("PlayerWalk");
+            if(NextMove.Item1>x){
+                base.faceRight();
+                Debug.Log("right");
+            }
+            else if(NextMove.Item1<x){
+                base.faceLeft();
+                Debug.Log("left");
+            }
+        }
+
+
+
         MovesUntilUpdate--;
     }
     static System.Random rand = new System.Random();

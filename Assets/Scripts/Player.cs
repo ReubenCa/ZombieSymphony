@@ -14,11 +14,7 @@ public class Player : MoveableEntity
     void Start(){
         PlayerAnimator=GetComponent<Animator>();
     }
-    public enum Directions{
-        left,
-        right
-    }
-    private Directions DirectionFacing = Directions.right;
+    
 
     public new void Init()
     {
@@ -29,21 +25,10 @@ public class Player : MoveableEntity
     void Update()
     {
         base.MoveableEntityUpdate();
-        UpdateLeftRight();
+        base.UpdateLeftRight();
     }
 
-    void UpdateLeftRight(){
-        float xScale=transform.localScale.x;
-        if (xScale>0&&DirectionFacing==Directions.left){
-            //Should be facing left 
-            xScale*=-1;
-        }
-        else if(xScale<0&&DirectionFacing==Directions.right){
-            //Should be facing right 
-            xScale*=-1;
-        }
-        transform.localScale=new Vector3(xScale,transform.localScale.y,transform.localScale.z);
-    }
+    
 
 
     public override void IdleUpdate()
@@ -58,11 +43,11 @@ public class Player : MoveableEntity
                 MoveInputted(0, -1);
                 break;
             case InputManager.Actions.left:
-                DirectionFacing=Directions.left;
+                base.faceLeft();
                 MoveInputted(-1,0);
                 break;
             case InputManager.Actions.right:
-                DirectionFacing=Directions.right;
+                base.faceRight();
                 MoveInputted(1,0);
                 break;
         }
