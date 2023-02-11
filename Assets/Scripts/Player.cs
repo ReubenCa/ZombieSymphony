@@ -75,10 +75,11 @@ public class Player : MoveableEntity
             }
         }
 
-        if(!Success)
+       
+/*if (!Success)
         {
             Debug.Log("Move Failed");
-        }
+        }*/
     }
 
     public override void ZombieSpawningUpdate()
@@ -86,5 +87,11 @@ public class Player : MoveableEntity
         //Terrible Software Design
         //*Shudders*
         throw new System.Exception("Shouldnt Call Zombie Spawning On Player");
+    }
+
+    public override void SleepUpdate()
+    {
+        //Dont do this at home kids
+        throw new System.Exception("Shouldnt Call Sleep On Player");
     }
 }

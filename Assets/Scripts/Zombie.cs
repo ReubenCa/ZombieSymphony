@@ -14,18 +14,55 @@ public class Zombie : MoveableEntity
     [SerializeField]
     float TimeBetweenMoves;
 
+    [SerializeField]
+    float MinTimeToSleep;
+    [SerializeField]
+    float MaxTimeToSleep;
+    [SerializeField]
+    float MinTimeSleeping;
+    [SerializeField]
+    float MaxTimeSleeping;
+    [SerializeField]
+    int NoWakeUpDistance;
+
+    float TimeSinceLastSleep = 0f;
+    float TimeAsleep = 0f;
+
     private float TimesinceLastMove = 0;
     private Animator PlayerAnimator;
     private void Update()
     {
+        
+        if (State != MoveableEntityState.ZombieSpawning && State!= MoveableEntityState.Sleeping)   
+            TimeSinceLastSleep += Time.deltaTime;
+        if(TimeSinceLastSleep>NextSleepTime && State ==MoveableEntityState.Idle)
+        {
+            State = MoveableEntityState.Sleeping;
+            NextWakeUpTime = UnityEngine.Random.Range(MinTimeSleeping, MaxTimeSleeping);
+        }
+
         base.MoveableEntityUpdate();
         base.UpdateLeftRight();
     }
+    float NextWakeUpTime;
+    public override void SleepUpdate()
+    {
+        TimeAsleep+=Time.deltaTime;
+        if(TimeAsleep>NextWakeUpTime)
+        {
+            State = MoveableEntityState.Idle;
+            NextSleepTime = UnityEngine.Random.Range(MinTimeToSleep, MaxTimeToSleep);
+            TimeSinceLastSleep = 0f;
+        }
+
+    }
+    float NextSleepTime;
     private void Start()
     {
         base.Init();
         PlayerAnimator=GetComponent<Animator>();
         Invoke("rise",0.01f);
+        NextSleepTime= UnityEngine.Random.Range(MinTimeToSleep, MaxTimeToSleep);
     }
     private void rise(){
         State = MoveableEntityState.ZombieSpawning;
@@ -66,7 +103,7 @@ public class Zombie : MoveableEntity
         TimesinceLastMove = 0;
         if (MovesUntilUpdate <= 0 || MovementQueue.Count ==0) {
             (int, int) NewTarget = PickTarget();
-            Debug.Log("New Tartget: " + NewTarget);
+           // Debug.Log("New Tartget: " + NewTarget);
             if (NewTarget.Item1 == x && NewTarget.Item2 == y)
             {
                 return;
