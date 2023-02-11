@@ -14,31 +14,51 @@ public class MusicManager : MonoBehaviour
     //
     public List<BeatPositions> PhaseBeatPositions;
     public List<AudioClip> PhaseAudioClip;
+    public List<OrchestraZombie> ZombiesToTrigger;
     public int bpm;
     public float forgiveness; //In Millisecond
-    private float audioStarted;
+    [HideInInspector]
+    public float audioStarted;
     private int phase = 0;// Starts at Phase 0
     private int nextPhase=0; //passed to loadphase after invoke
     private float TimeInBar;
-    private float TimeIn8Bars;
+    [HideInInspector]
+    public float TimeIn8Bars;
     private AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {
         audioSource=GetComponent<AudioSource>();
-        TimeInBar=60000/bpm; //In Millseconds
+        TimeInBar=60000/(bpm/4); //In Millseconds
         TimeIn8Bars=TimeInBar*8;
         loadPhase(0);
+        StartCoroutine(callPhases(new List<float>{0f,16f,16f,16f,16f,16f}));
     }
+
+    IEnumerator callPhases(List<float> TimePerPhase){
+        for (int i = 0; i < 6; i++)
+        {
+            Debug.Log("Waiting for: "+TimePerPhase[i]);
+            yield return new WaitForSeconds(TimePerPhase[i]);
+            Debug.Log("LoadingWhenReady");
+            loadPhaseWhenReady(i+1);
+        }
+    }
+
+
     public void loadPhaseWhenReady(int newPhase){
         float TimeElapsedSinceAudioStarted=Time.time-audioStarted;
         float actualBar=TimeElapsedSinceAudioStarted%TimeIn8Bars;
         float timeUntilNextBar = TimeIn8Bars-actualBar;
         nextPhase=newPhase;
-        Invoke("loadPhase",TimeIn8Bars);
+        Debug.Log(timeUntilNextBar);
+        Invoke("loadPhase",timeUntilNextBar/1000f);
+    }
+    public void loadPhase(){
+        loadPhase(-1);
     }
 
-    public void loadPhase(int newPhase=-1){
+    public void loadPhase(int newPhase){
         if(newPhase==-1){
             newPhase=nextPhase;
         }
@@ -46,7 +66,13 @@ public class MusicManager : MonoBehaviour
         audioSource.Play();
         audioStarted=Time.time;
         phase=newPhase;
-
+        if(newPhase!=0){
+             ZombiesToTrigger[newPhase].enter();
+             if(newPhase==1){
+                ZombiesToTrigger[0].enter();
+             }
+        }
+       
     }
 
     // Update is called once per frame

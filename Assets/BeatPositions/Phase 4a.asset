@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04abcb8d2fe7c2059abc5329b487908c, type: 3}
-  m_Name: Phase 3
+  m_Name: Phase 4a
   m_EditorClassIdentifier: 
   beatPositions:
   - 0
@@ -18,18 +18,20 @@ MonoBehaviour:
   - 1
   - 1.5
   - 2
-  - 2.25
   - 2.5
-  - 2.75
   - 3
+  - 3.1666667
+  - 3.3333333
   - 3.5
+  - 3.6666667
+  - 3.8333333
   - 4
   - 4.5
   - 5
-  - 5.25
   - 5.5
   - 6
   - 6.5
-  - 6.75
   - 7
   - 7.5
+  - 7.6666665
+  - 7.8333335
