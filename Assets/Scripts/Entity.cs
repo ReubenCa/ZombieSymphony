@@ -6,6 +6,10 @@ public abstract class Entity : MonoBehaviour
 {
     public abstract bool getPassable();
 
+    public virtual void onContact()
+    {
+        return;
+    }
 
     protected void Init()
     {

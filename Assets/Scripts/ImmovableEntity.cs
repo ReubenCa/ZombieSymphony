@@ -11,17 +11,15 @@ public abstract class ImmovableEntity : Entity
     [SerializeField]
     int Width;
 
-    public override bool getPassable()
-    {
-        return false;
-    }
 
+    protected int BottomLeftX;
+    protected int BottomLeftY;
 
     public new void Init()
     {
-        int BottomLeftX = (int)Math.Floor(gameObject.transform.position.x);
+         BottomLeftX = (int)Math.Floor(gameObject.transform.position.x);
         base.Init();
-        int BottomLeftY = (int)Math.Floor(gameObject.transform.position.y);
+         BottomLeftY = (int)Math.Floor(gameObject.transform.position.y);
         for (int xiter = BottomLeftX; xiter< BottomLeftX + Width; xiter++)
         {
             for(int yiter= BottomLeftY; yiter<BottomLeftY+ Height; yiter++)

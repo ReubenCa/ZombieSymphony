@@ -57,12 +57,16 @@ public class Player : MoveableEntity
     public void MoveInputted(int deltaX, int deltaY)
     {
         bool Success = TryScheduleMove(x+deltaX,y+deltaY);
-        if(Success){
+        if (Success) {
             PlayerAnimator.Play("PlayerWalk");
             Zombie.PlayerX = x;
             Zombie.PlayerY = y;
-            }
+            List<Entity> entities = TerrainManager.Instance.GetTerrainTile(x, y);
+            foreach (Entity e in new List<Entity>(entities)) {
 
+                e.onContact();
+            }
+        }
 
         if(!Success)
         {
