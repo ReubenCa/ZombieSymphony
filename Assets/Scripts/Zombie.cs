@@ -53,6 +53,7 @@ public class Zombie : MoveableEntity
             State = MoveableEntityState.Idle;
             NextSleepTime = UnityEngine.Random.Range(MinTimeToSleep, MaxTimeToSleep);
             TimeSinceLastSleep = 0f;
+            TimeAsleep = 0f;
         }
 
     }
@@ -171,6 +172,24 @@ public class Zombie : MoveableEntity
         gameObject.transform.position = new Vector3(gameObject.transform.position.x, newy, gameObject.transform.position.z);
         distancerisen += newy;
         
+    }
+
+
+    public override void onContact()
+    {
+        if(State!= MoveableEntityState.Sleeping)
+        {
+            Debug.Log("PLAYER DEAD");
+            return;
+        }
+
+        if (!Player.Instance.isBiting)
+        {
+            Debug.Log("player not biting");
+            return;
+        }
+        TerrainManager.Instance.ClearFromTile(x, y, this);
+        Destroy(gameObject);
     }
 }
 

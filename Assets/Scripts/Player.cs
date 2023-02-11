@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class Player : MoveableEntity
 {
-    private bool isBiting;
+    public static Player Instance;
+    public void Awake()
+    {
+        if(Instance != null) { throw new System.Exception("Multiple Players"); }
+        Instance = this;
+    }
+
+    public bool isBiting;
 
     private Animator PlayerAnimator;
 
@@ -22,7 +29,13 @@ public class Player : MoveableEntity
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.Space)){
+        List<Entity> entities = TerrainManager.Instance.GetTerrainTile(x, y);
+        foreach (Entity e in new List<Entity>(entities))
+        {
+
+            e.onContact();
+        }
+        if (Input.GetKey(KeyCode.Space)){
             if(!isBiting){setBiting(true);}
         }
         else{
@@ -68,11 +81,7 @@ public class Player : MoveableEntity
             PlayerAnimator.Play("PlayerWalk");
             Zombie.PlayerX = x;
             Zombie.PlayerY = y;
-            List<Entity> entities = TerrainManager.Instance.GetTerrainTile(x, y);
-            foreach (Entity e in new List<Entity>(entities)) {
 
-                e.onContact();
-            }
         }
 
        
