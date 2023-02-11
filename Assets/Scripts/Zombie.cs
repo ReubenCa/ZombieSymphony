@@ -17,13 +17,40 @@ public class Zombie : MoveableEntity
             Debug.Log(p);
         }
     }
-     
+    [NonSerialized]
+    public static int PlayerX;
+    [NonSerialized]
+    public static int PlayerY;
+
+    [SerializeField]//Measured in how many moves it takes to update
+    private int TargetUpdateFrequency;
+
+    private Queue<(int, int)> MovementQueue;
+    private int MovesUntilUpdate = 4;
+    private int TargetAccuracy = 2;
     public override void IdleUpdate()
     {
-        
+        if (MovesUntilUpdate <= 0 || MovementQueue.Count ==0) {
+            (int, int) NewTarget = PickTarget();
+            MovementQueue = new Queue<(int, int)>(Navigator.AStar(x, y, NewTarget.Item1, NewTarget.Item2));
+            MovesUntilUpdate = TargetUpdateFrequency;
+        }
+        (int,int) NextMove = MovementQueue.Dequeue();
+        TryScheduleMove(NextMove.Item1, NextMove.Item2);
+        MovesUntilUpdate--;
     }
-
-    
+    static System.Random rand = new System.Random();
+    private (int,int) PickTarget()
+    {
+        int targetx = -100;
+        int targety = -100;
+        while(!TerrainManager.Instance.PositionValid(targetx, targety))
+        {
+            targetx = rand.Next(PlayerX - TargetAccuracy, PlayerX + TargetAccuracy);
+            targety = rand.Next(PlayerY - TargetAccuracy, PlayerY + TargetAccuracy);
+        }
+        return (targetx,targety);
+    }
 
 }
 
