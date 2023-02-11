@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
         {
             throw new System.Exception("Multiple Game Managers");
         }
-        instance = this;
+        instance = this;//
         AllGraves = new List<Grave>();
     }
 
