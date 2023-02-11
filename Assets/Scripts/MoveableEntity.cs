@@ -115,10 +115,6 @@ public abstract class MoveableEntity : Entity
         x = DestX;
         y = DestY;
 
-
-     //   Zombie.PlayerX = x;
-      //  Zombie.PlayerY = y;
-
         return true;
     }
 

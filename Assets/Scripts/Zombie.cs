@@ -18,22 +18,11 @@ public class Zombie : MoveableEntity
     private void Start()
     {
 //DAVIDS STUFF
-        List<(int, int)> t = Navigator.AStar(-4, -4, 4, 4);
-        foreach((int,int) p in t)
-        {
-            Debug.Log(p);
-        }
         PlayerAnimator=GetComponent<Animator>();
     }
 
-    [NonSerialized]
-//MY STUFF
-        //List<(int, int)> t = Navigator.AStar(-4, -4, 4, 4);
-        //foreach((int,int) p in t)
-        //{/
-        //    Debug.Log(p);
-        //}
-    }
+  
+    
 //UNTOUCHED
     public static int PlayerX;
     public static int PlayerY;
@@ -60,7 +49,7 @@ public class Zombie : MoveableEntity
         }
         (int,int) NextMove = MovementQueue.Dequeue();
 //DAVIDS STUFF
-        bool moveSuccessful = TryScheduleMove(NextMove.Item1, NextMove.Item2);
+     /*   bool moveSuccessful = TryScheduleMove(NextMove.Item1, NextMove.Item2);
         //Update Facing Position - David
         //TODO
         Debug.Log("moved");
@@ -75,14 +64,25 @@ public class Zombie : MoveableEntity
                 Debug.Log("left");
             }
         }
-
-
+     */
 //UNTOUCHED
         int dx = x;
         int dy = y;
         bool success = TryScheduleMove(NextMove.Item1, NextMove.Item2);
-       // Debug.Log("Schedule Move from (" + dx + "," + dy + ") -> (" + NextMove.Item1 + "," + NextMove.Item2 + ")"
-          //  + " Success:" + success);
+        // Debug.Log("Schedule Move from (" + dx + "," + dy + ") -> (" + NextMove.Item1 + "," + NextMove.Item2 + ")"
+        //  + " Success:" + success);
+        if (success)
+        {
+            PlayerAnimator.Play("PlayerWalk");
+            if (NextMove.Item1 > dx)
+            {
+                base.faceRight();
+            }
+            else if (NextMove.Item1 < dx)
+            {
+                base.faceLeft();
+            }
+        }
 //UNTOUCHED
         MovesUntilUpdate--;
     }
