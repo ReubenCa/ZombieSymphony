@@ -179,7 +179,7 @@ public class Zombie : MoveableEntity
     {
         if(State!= MoveableEntityState.Sleeping)
         {
-            Debug.Log("PLAYER DEAD");
+            GameManager.instance.PlayerDead();
             return;
         }
 

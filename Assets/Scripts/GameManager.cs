@@ -27,7 +27,21 @@ public class GameManager : MonoBehaviour
         //Navigator.Init();
         //SpawnFlower();
     }
+    [SerializeField]
+    float Lives = 3f;
+    public void MoveNotOnBeat()
+    {
+        Lives -= 1;
+        if(Lives < 0)
+        {
+            PlayerDead();
+        }
+    }
 
+    public void PlayerDead()
+    {
+        Debug.Log("THE PLAYER IS DEAD");
+    }
     public void onFlowerCollected()
     {
         FlowersCollected++;
@@ -37,8 +51,12 @@ public class GameManager : MonoBehaviour
     public bool SpawnFlowers = true;
     float flowerspawncritera = 10f;
     float flowerspawntimer = 0f;
+    [SerializeField]
+    float LifeRegenRate;
     void Update()
     {
+        Lives = Mathf.Min(Lives + LifeRegenRate * Time.deltaTime, 3f);
+
         if (!SpawnFlowers)
             return;
        // Debug.Log(flowerspawncritera);
@@ -49,6 +67,7 @@ public class GameManager : MonoBehaviour
             flowerspawntimer = 0f;
             flowerspawncritera =0.5f + (float)Random.Range(0, 128) / 16f;
         }
+
     }
     GameObject ZombiePrefab;
     public void SpawnZombie(int x, int y)

@@ -76,6 +76,10 @@ public class Player : MoveableEntity
     
     public void MoveInputted(int deltaX, int deltaY)
     {
+       if(! MusicManager.instance.checkIfBeat())
+        {
+            GameManager.instance.MoveNotOnBeat();
+        }
         bool Success = TryScheduleMove(x+deltaX,y+deltaY);
         if (Success) {
             PlayerAnimator.Play("PlayerWalk");
