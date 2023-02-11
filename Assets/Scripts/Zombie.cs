@@ -5,10 +5,12 @@ using Utils;
 using System;
 using System.Runtime.InteropServices;
 using Unity.VisualScripting;
-
+using System.Net.NetworkInformation;
 
 public class Zombie : MoveableEntity
 {
+    [SerializeField]
+    private GameObject Mask;
     [SerializeField]
     float TimeBetweenMoves;
 
@@ -21,13 +23,16 @@ public class Zombie : MoveableEntity
     }
     private void Start()
     {
-//DAVIDS STUFF
         PlayerAnimator=GetComponent<Animator>();
+        State = MoveableEntityState.ZombieSpawning;
+        OriginalY = gameObject.transform.position.y - DistancetoRise;
+        gameObject.transform.position = new Vector3(gameObject.transform.position.x,
+            OriginalY - DistancetoRise, gameObject.transform.position.z);
+        Mask.gameObject.SetActive(true);
     }
 
   
-    
-//UNTOUCHED
+
     public static int PlayerX;
     public static int PlayerY;
 
@@ -79,7 +84,10 @@ public class Zombie : MoveableEntity
 
         MovesUntilUpdate--;
     }
+    
+    
     static System.Random rand = new System.Random();
+
     private (int,int) PickTarget()
     {
         int targetx = -100;
@@ -91,7 +99,29 @@ public class Zombie : MoveableEntity
         }
         return (targetx,targety);
     }
+    [SerializeField]
+    float RiseFromGraveSpeed;
+    [SerializeField]
+    float DistancetoRise;
 
+    private float distancerisen;
+    private float OriginalY;
+    public override void ZombieSpawningUpdate()
+    {
+        float deltay= RiseFromGraveSpeed * Time.deltaTime;
+        float newy = gameObject.transform.position.y + deltay;
+        Mask.gameObject.transform.position = new Vector3(Mask.gameObject.transform.position.x,
+            Mask.gameObject.transform.position.y - deltay, Mask.gameObject.transform.position.z);
+        if (newy > DistancetoRise + OriginalY)
+        {
+            newy = DistancetoRise + OriginalY;
+            State = MoveableEntityState.Idle;
+            Mask.gameObject.SetActive(false) ;
+        }
+        gameObject.transform.position = new Vector3(gameObject.transform.position.x, newy, gameObject.transform.position.z);
+        distancerisen += newy;
+        
+    }
 }
 
 public static class Navigator

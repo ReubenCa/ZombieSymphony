@@ -68,5 +68,10 @@ public class Player : MoveableEntity
             Debug.Log("Move Failed");
         }
     }
-    
+
+    public override void ZombieSpawningUpdate()
+    {
+        //Terrible Software Design
+        throw new System.Exception("Shouldnt Call Zombie Spawning On Player");
+    }
 }

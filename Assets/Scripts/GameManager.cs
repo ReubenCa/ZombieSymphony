@@ -15,4 +15,10 @@ public class GameManager : MonoBehaviour
     {
         
     }
+    GameObject ZombiePrefab;
+    public void SpawnZombie(int x, int y)
+    {
+       Instantiate(ZombiePrefab, new Vector3((float)x,(float)y,0), Quaternion.identity);
+        
+    }
 }
