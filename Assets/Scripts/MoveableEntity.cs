@@ -84,6 +84,10 @@ public abstract class MoveableEntity : Entity
 
     public bool TryScheduleMove(int DestX, int DestY)
     {
+        if (!Navigator.TilesareNeighbors((DestX,DestY),(x,y)))
+        {
+            throw new System.Exception("Tiles not neighbors");
+        }
         Debug.Assert(State != MoveableEntityState.Moving);
         if((DestX == x) == (DestY ==y))
         {
@@ -98,7 +102,7 @@ public abstract class MoveableEntity : Entity
         TerrainManager.Instance.EntityMoving(this, DestX, DestY);
         DestinationX= DestX;
         DestinationY = DestY;
-        Debug.Log("Move Scheduled");
+       // Debug.Log("Move Scheduled");
         State = MoveableEntityState.Moving;
         MoveStartX = x;
         MoveStartY = y;
@@ -106,8 +110,8 @@ public abstract class MoveableEntity : Entity
         y = DestY;
 
 
-        Zombie.PlayerX = x;
-        Zombie.PlayerY = y;
+     //   Zombie.PlayerX = x;
+      //  Zombie.PlayerY = y;
 
         return true;
     }
