@@ -9,21 +9,22 @@ using Unity.VisualScripting;
 
 public class Zombie : MoveableEntity
 {
+    private Animator PlayerAnimator;
     private void Update()
     {
         base.MoveableEntityUpdate();
+        base.UpdateLeftRight();
     }
     private void Start()
     {
-        List<(int, int)> t = Navigator.AStar(-4, -4, 4, 4);
-        foreach((int,int) p in t)
-        {
-            Debug.Log(p);
-        }
+//DAVIDS STUFF
+        PlayerAnimator=GetComponent<Animator>();
     }
-    [NonSerialized]
+
+  
+    
+//UNTOUCHED
     public static int PlayerX;
-    [NonSerialized]
     public static int PlayerY;
 
     [SerializeField]//Measured in how many moves it takes to update
@@ -31,16 +32,58 @@ public class Zombie : MoveableEntity
 
     private Queue<(int, int)> MovementQueue = new Queue<(int, int)>();
     private int MovesUntilUpdate = 4;
+    [SerializeField]
     private int TargetAccuracy = 2;
     public override void IdleUpdate()
     {
         if (MovesUntilUpdate <= 0 || MovementQueue.Count ==0) {
             (int, int) NewTarget = PickTarget();
+            Debug.Log("New Tartget: " + NewTarget);
+            if (NewTarget.Item1 == x && NewTarget.Item2 == y)
+            {
+                return;
+            }
             MovementQueue = new Queue<(int, int)>(Navigator.AStar(x, y, NewTarget.Item1, NewTarget.Item2));
+            MovementQueue.Dequeue();
             MovesUntilUpdate = TargetUpdateFrequency;
         }
         (int,int) NextMove = MovementQueue.Dequeue();
-        TryScheduleMove(NextMove.Item1, NextMove.Item2);
+//DAVIDS STUFF
+     /*   bool moveSuccessful = TryScheduleMove(NextMove.Item1, NextMove.Item2);
+        //Update Facing Position - David
+        //TODO
+        Debug.Log("moved");
+        if(moveSuccessful){
+            PlayerAnimator.Play("PlayerWalk");
+            if(NextMove.Item1>x){
+                base.faceRight();
+                Debug.Log("right");
+            }
+            else if(NextMove.Item1<x){
+                base.faceLeft();
+                Debug.Log("left");
+            }
+        }
+     */
+//UNTOUCHED
+        int dx = x;
+        int dy = y;
+        bool success = TryScheduleMove(NextMove.Item1, NextMove.Item2);
+        // Debug.Log("Schedule Move from (" + dx + "," + dy + ") -> (" + NextMove.Item1 + "," + NextMove.Item2 + ")"
+        //  + " Success:" + success);
+        if (success)
+        {
+            PlayerAnimator.Play("PlayerWalk");
+            if (NextMove.Item1 > dx)
+            {
+                base.faceRight();
+            }
+            else if (NextMove.Item1 < dx)
+            {
+                base.faceLeft();
+            }
+        }
+//UNTOUCHED
         MovesUntilUpdate--;
     }
     static System.Random rand = new System.Random();
@@ -64,33 +107,15 @@ public static class Navigator
     static int BottomLeftX;
     static int BottomLeftY;
 
-    static (int, int) ConvertToGameCoords(int x, int y)
-    {
-        return (x + BottomLeftX, y + BottomLeftY);
-    }
-
-    static (int, int) ConvertToArrayCoords(int x, int y)
-    {
-        return (x - BottomLeftX, y - BottomLeftY);
-    }
-
-  /*  public static void Init()
-    {
-        (int, int, int, int) dims = TerrainManager.Instance.GetDimensions();
-        TileAllowed = new bool[dims.Item1, dims.Item2];
-        for (int xiter = 0; xiter < dims.Item1; xiter++)
-        {
-            for (int yiter = 0; yiter < dims.Item2; yiter++)
-            {
-                (int, int) GCoords = ConvertToGameCoords(xiter, yiter);
-                TileAllowed[xiter, yiter] = TerrainManager.Instance.TilePassable(GCoords.Item1, GCoords.Item2);
-            }
-        }
-
-    }*/
+ 
     private static int AStarHeuristic(int startX, int startY, int DestX, int DestY)
     {
         return Math.Abs(startX - DestX) + Math.Abs(startY - DestY);
+    }
+
+    static public bool TilesareNeighbors((int,int) t1, (int, int) t2)
+    {
+        return Math.Abs(t1.Item1 - t2.Item1) + Math.Abs(t1.Item2- t2.Item2) <=1;
     }
 
     public static List<(int, int)> AStar(int startX, int startY, int DestX, int DestY)
@@ -140,6 +165,11 @@ public static class Navigator
             r.Add((c.x, c.y));
             c = c.previous;
         }
+        for (int i = 0; i< r.Count-1; i++)
+        {
+            Debug.Assert(TilesareNeighbors(r[i], r[i + 1]));
+        }
+        r.Reverse();
         return r;
     }
 
