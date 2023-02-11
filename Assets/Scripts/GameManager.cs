@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
     {
         timesincelastzombiespawn += Time.deltaTime / (ZombiesAlive + 1);
         //new List<float> { 1f,2f}
-        if(ZombiesAlive == 0 || timesincelastzombiespawn > NextSpawnCriteria)
+        if((ZombiesAlive == 0 || timesincelastzombiespawn > NextSpawnCriteria) && SpawnZombies)
         {
             SpawnZombie();
             timesincelastzombiespawn = 0;

@@ -38,6 +38,8 @@ public class Zombie : MoveableEntity
         if(TimeSinceLastSleep>NextSleepTime && State ==MoveableEntityState.Idle)
         {
             State = MoveableEntityState.Sleeping;
+            Debug.Log("Calling Sleep Animation");
+            PlayerAnimator.Play("ZombieSleeping");
             NextWakeUpTime = UnityEngine.Random.Range(MinTimeSleeping, MaxTimeSleeping);
         }
 
@@ -50,6 +52,7 @@ public class Zombie : MoveableEntity
         TimeAsleep+=Time.deltaTime;
         if (TimeAsleep > NextWakeUpTime && Navigator.AStarHeuristic(x, y, PlayerX, PlayerY) > NoWakeUpDistance) 
         {
+            PlayerAnimator.Play("PlayerIdle");
             State = MoveableEntityState.Idle;
             NextSleepTime = UnityEngine.Random.Range(MinTimeToSleep, MaxTimeToSleep);
             TimeSinceLastSleep = 0f;
