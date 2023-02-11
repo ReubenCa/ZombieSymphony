@@ -9,6 +9,10 @@ using Unity.VisualScripting;
 
 public class Zombie : MoveableEntity
 {
+    [SerializeField]
+    float TimeBetweenMoves;
+
+    private float TimesinceLastMove = 0;
     private Animator PlayerAnimator;
     private void Update()
     {
@@ -36,6 +40,12 @@ public class Zombie : MoveableEntity
     private int TargetAccuracy = 2;
     public override void IdleUpdate()
     {
+        if(TimesinceLastMove < TimeBetweenMoves)
+        {
+            TimesinceLastMove += Time.deltaTime;
+            return;
+        }
+        TimesinceLastMove = 0;
         if (MovesUntilUpdate <= 0 || MovementQueue.Count ==0) {
             (int, int) NewTarget = PickTarget();
             Debug.Log("New Tartget: " + NewTarget);
@@ -48,24 +58,7 @@ public class Zombie : MoveableEntity
             MovesUntilUpdate = TargetUpdateFrequency;
         }
         (int,int) NextMove = MovementQueue.Dequeue();
-//DAVIDS STUFF
-     /*   bool moveSuccessful = TryScheduleMove(NextMove.Item1, NextMove.Item2);
-        //Update Facing Position - David
-        //TODO
-        Debug.Log("moved");
-        if(moveSuccessful){
-            PlayerAnimator.Play("PlayerWalk");
-            if(NextMove.Item1>x){
-                base.faceRight();
-                Debug.Log("right");
-            }
-            else if(NextMove.Item1<x){
-                base.faceLeft();
-                Debug.Log("left");
-            }
-        }
-     */
-//UNTOUCHED
+
         int dx = x;
         int dy = y;
         bool success = TryScheduleMove(NextMove.Item1, NextMove.Item2);
@@ -83,7 +76,7 @@ public class Zombie : MoveableEntity
                 base.faceLeft();
             }
         }
-//UNTOUCHED
+
         MovesUntilUpdate--;
     }
     static System.Random rand = new System.Random();
