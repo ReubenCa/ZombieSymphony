@@ -46,9 +46,10 @@ public abstract class MoveableEntity : Entity
     {
         Moving,
         Idle,
-        ZombieSpawning
+        ZombieSpawning,
+        Sleeping
     }
-
+    abstract public void SleepUpdate();
     // Update is called once per frame
     public void MoveableEntityUpdate()
     {
@@ -61,6 +62,8 @@ public abstract class MoveableEntity : Entity
                 MovingUpdate(); break;
             case MoveableEntityState.ZombieSpawning:
                 ZombieSpawningUpdate(); break;
+            case MoveableEntityState.Sleeping:
+                SleepUpdate(); break;
         }
     }
 

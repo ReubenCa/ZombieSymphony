@@ -322,6 +322,11 @@ MonoBehaviour:
   TimeToMove: 1
   Mask: {fileID: 5978586408199990759}
   TimeBetweenMoves: 0.5
+  MinTimeToSleep: 7
+  MaxTimeToSleep: 12
+  MinTimeSleeping: 10
+  MaxTimeSleeping: 15
+  NoWakeUpDistance: 3
   TargetUpdateFrequency: 5
   TargetAccuracy: 2
   RiseFromGraveSpeed: 0.7
