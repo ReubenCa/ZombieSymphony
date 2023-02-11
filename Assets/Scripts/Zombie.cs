@@ -48,7 +48,7 @@ public class Zombie : MoveableEntity
     public override void SleepUpdate()
     {
         TimeAsleep+=Time.deltaTime;
-        if(TimeAsleep>NextWakeUpTime)
+        if (TimeAsleep > NextWakeUpTime && Navigator.AStarHeuristic(x, y, PlayerX, PlayerY) > NoWakeUpDistance) 
         {
             State = MoveableEntityState.Idle;
             NextSleepTime = UnityEngine.Random.Range(MinTimeToSleep, MaxTimeToSleep);
