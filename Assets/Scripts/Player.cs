@@ -58,6 +58,8 @@ public class Player : MoveableEntity
         bool Success = TryScheduleMove(x+deltaX,y+deltaY);
         if(Success){
             PlayerAnimator.Play("PlayerWalk");
+            Zombie.PlayerX = x;
+            Zombie.PlayerY = y;
             }
 
 
