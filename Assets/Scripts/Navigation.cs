@@ -10,7 +10,7 @@ public static class Navigator
     static int BottomLeftY;
 
 
-    private static int AStarHeuristic(int startX, int startY, int DestX, int DestY)
+    public static int AStarHeuristic(int startX, int startY, int DestX, int DestY)
     {
         return Math.Abs(startX - DestX) + Math.Abs(startY - DestY);
     }

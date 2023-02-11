@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
+    public static MusicManager instance { private set; get; }
+    private void Awake()
+    {
+        if (instance != null) { throw new System.Exception("TWO MUSIC MANAGERS"); }
+        instance = this;
+    }
     //5 Phases of Music are rythym loops of 8 bars each
     //
     public List<BeatPositions> PhaseBeatPositions;
@@ -46,15 +52,16 @@ public class MusicManager : MonoBehaviour
     // Update is called once per frame
 
 
-    bool checkIfBeat(){
+    public bool checkIfBeat(){
 
         float TimeElapsedSinceAudioStarted=Time.time-audioStarted;
         float actualBar=TimeElapsedSinceAudioStarted%TimeIn8Bars;
-        float minDistanceToBeat=1000000000;
+        float minDistanceToBeat=float.MaxValue;
         foreach (float BeatPosition in PhaseBeatPositions[phase].beatPositions)
         {
             minDistanceToBeat=Mathf.Min(minDistanceToBeat,Mathf.Abs(BeatPosition-actualBar));
         }
+        Debug.Log(minDistanceToBeat < forgiveness ? "HIT" : "MISS");
         return minDistanceToBeat<forgiveness;
     }
 }

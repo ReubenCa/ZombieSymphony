@@ -48,7 +48,7 @@ public class Zombie : MoveableEntity
     public override void SleepUpdate()
     {
         TimeAsleep+=Time.deltaTime;
-        if(TimeAsleep>NextWakeUpTime)
+        if (TimeAsleep > NextWakeUpTime && Navigator.AStarHeuristic(x, y, PlayerX, PlayerY) > NoWakeUpDistance) 
         {
             State = MoveableEntityState.Idle;
             NextSleepTime = UnityEngine.Random.Range(MinTimeToSleep, MaxTimeToSleep);
@@ -179,7 +179,7 @@ public class Zombie : MoveableEntity
     {
         if(State!= MoveableEntityState.Sleeping)
         {
-            Debug.Log("PLAYER DEAD");
+            GameManager.instance.PlayerDead();
             return;
         }
 

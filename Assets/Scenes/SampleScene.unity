@@ -300,6 +300,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 226972590}
+  - component: {fileID: 226972591}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -322,6 +323,23 @@ Transform:
   m_Father: {fileID: 1794856925}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &226972591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226972589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d197c8d4271672a49a39051e2d2fbdc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlowerPrefab: {fileID: 1214024935755145082, guid: 41c5b12785f7ff4478b3de28f6dbf08a, type: 3}
+  FlowersCollected: 0
+  Lives: 3
+  SpawnFlowers: 1
+  LifeRegenRate: 0.03
 --- !u!1 &279304140
 GameObject:
   m_ObjectHideFlags: 0
