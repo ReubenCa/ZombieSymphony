@@ -5,9 +5,9 @@ using UnityEngine;
 
 public static class Navigator
 {
-    static bool[,] TileAllowed;
-    static int BottomLeftX;
-    static int BottomLeftY;
+    //static bool[,] TileAllowed;
+    //static int BottomLeftX;
+    //static int BottomLeftY;
 
 
     public static int AStarHeuristic(int startX, int startY, int DestX, int DestY)
@@ -58,7 +58,8 @@ public static class Navigator
         }
         if (finaldat == null)
         {
-            throw new System.Exception("No path found From (" + startX + "," + startY + ") -> (" + DestX + "," + DestY + ")");
+            // throw new System.Exception("No path found From (" + startX + "," + startY + ") -> (" + DestX + "," + DestY + ")");
+            return null;
         }
         List<(int, int)> r = new List<(int, int)>();
         AStarPointData c = finaldat;
@@ -81,7 +82,7 @@ public static class Navigator
         List<(int, int)> PointsToConsider = new List<(int, int)> { (x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1) };
         foreach (var point in PointsToConsider)
         {
-            if (TerrainManager.Instance.PositionValid(point.Item1, point.Item2))
+            if (TerrainManager.Instance.PositionValid(point.Item1, point.Item2,false))
             {
                 r.Add(point);
             }
