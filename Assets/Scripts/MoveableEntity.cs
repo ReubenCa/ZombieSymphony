@@ -12,6 +12,12 @@ public abstract class MoveableEntity : Entity
     public int x { protected set; get; }
     public int y { protected set; get; }
 
+    public enum Directions{
+        left,
+        right
+    }
+    private Directions DirectionFacing = Directions.right;
+
     float CurrentMovementX;
     float CurrentMovementY;
     int MoveStartX;
@@ -116,6 +122,24 @@ public abstract class MoveableEntity : Entity
         return true;
     }
 
-    
+    public void UpdateLeftRight(){
+        float xScale=transform.localScale.x;
+        if (xScale>0&&DirectionFacing==Directions.left){
+            //Should be facing left 
+            xScale*=-1;
+        }
+        else if(xScale<0&&DirectionFacing==Directions.right){
+            //Should be facing right 
+            xScale*=-1;
+        }
+        transform.localScale=new Vector3(xScale,transform.localScale.y,transform.localScale.z);
+    }
+
+    public void faceLeft(){
+        DirectionFacing=Directions.left;
+    }
+    public void faceRight(){
+        DirectionFacing=Directions.right;
+    }
     
 }

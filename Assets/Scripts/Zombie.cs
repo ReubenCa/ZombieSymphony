@@ -9,21 +9,33 @@ using Unity.VisualScripting;
 
 public class Zombie : MoveableEntity
 {
+    private Animator PlayerAnimator;
     private void Update()
     {
         base.MoveableEntityUpdate();
+        base.UpdateLeftRight();
     }
     private void Start()
     {
+//DAVIDS STUFF
+        List<(int, int)> t = Navigator.AStar(-4, -4, 4, 4);
+        foreach((int,int) p in t)
+        {
+            Debug.Log(p);
+        }
+        PlayerAnimator=GetComponent<Animator>();
+    }
+
+    [NonSerialized]
+//MY STUFF
         //List<(int, int)> t = Navigator.AStar(-4, -4, 4, 4);
         //foreach((int,int) p in t)
         //{/
         //    Debug.Log(p);
         //}
     }
-   //[NonSerialized]
+//UNTOUCHED
     public static int PlayerX;
-   // [NonSerialized]
     public static int PlayerY;
 
     [SerializeField]//Measured in how many moves it takes to update
@@ -47,11 +59,31 @@ public class Zombie : MoveableEntity
             MovesUntilUpdate = TargetUpdateFrequency;
         }
         (int,int) NextMove = MovementQueue.Dequeue();
+//DAVIDS STUFF
+        bool moveSuccessful = TryScheduleMove(NextMove.Item1, NextMove.Item2);
+        //Update Facing Position - David
+        //TODO
+        Debug.Log("moved");
+        if(moveSuccessful){
+            PlayerAnimator.Play("PlayerWalk");
+            if(NextMove.Item1>x){
+                base.faceRight();
+                Debug.Log("right");
+            }
+            else if(NextMove.Item1<x){
+                base.faceLeft();
+                Debug.Log("left");
+            }
+        }
+
+
+//UNTOUCHED
         int dx = x;
         int dy = y;
         bool success = TryScheduleMove(NextMove.Item1, NextMove.Item2);
        // Debug.Log("Schedule Move from (" + dx + "," + dy + ") -> (" + NextMove.Item1 + "," + NextMove.Item2 + ")"
           //  + " Success:" + success);
+//UNTOUCHED
         MovesUntilUpdate--;
     }
     static System.Random rand = new System.Random();
