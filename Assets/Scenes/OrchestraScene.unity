@@ -4739,13 +4739,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 777ad035101aa92b8a34e3ffc358f6cb, type: 3}
   - {fileID: 8300000, guid: bc17b8ea6478c759594d844b51e5b28b, type: 3}
   - {fileID: 8300000, guid: 9dbb7628d309295e4aaaab8eaa49c382, type: 3}
-  ZombiesToTrigger:
-  - {fileID: 1455830535}
-  - {fileID: 1463490666}
-  - {fileID: 1738358805}
-  - {fileID: 2124022435}
-  - {fileID: 846413162}
-  - {fileID: 930716298}
+  ZombiesToTrigger: []
   bpm: 120
   forgiveness: 100
   audioStarted: 0
