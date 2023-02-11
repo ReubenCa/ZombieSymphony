@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Grave : ImmovableEntity
 {
-
+    //Hewwo UWU
     private void Start()
     {
         base.Init();
