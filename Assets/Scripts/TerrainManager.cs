@@ -23,6 +23,10 @@ public class TerrainManager : MonoBehaviour
             }
         }
     }
+    public (int, int,int, int) GetDimensions()
+    {
+        return (Width,Height, bottomLeftx, bottomLefty);
+    }
 
     [SerializeField]
     private int Width;
