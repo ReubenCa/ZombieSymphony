@@ -56,7 +56,8 @@ public class TerrainManager : MonoBehaviour
     }
     public bool TilePassable(int x, int y)
     {
-        return GetTerrainTile(x, y).TrueForAll(t => t.getPassable());
+        
+        return  GetTerrainTile(x, y).TrueForAll(t => t.getPassable());
     }
 
     public bool PositionValid(int x, int y)
