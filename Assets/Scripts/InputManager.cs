@@ -23,19 +23,19 @@ public class InputManager : MonoBehaviour
     public Actions getInput()
     {
      //   Debug.Log("Updating");
-        if(Input.GetKeyDown(KeyCode.W)||Input.GetKey(KeyCode.UpArrow))
+        if(Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.UpArrow))
         {
             return Actions.up;
         }
-        else if (Input.GetKeyDown(KeyCode.D)||Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKeyDown(KeyCode.D)||Input.GetKeyDown(KeyCode.RightArrow))
         {
             return Actions.right;
         }
-        if (Input.GetKeyDown(KeyCode.S)||Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.S)||Input.GetKeyDown(KeyCode.DownArrow))
         {
             return Actions.down;
         }
-        else if (Input.GetKeyDown(KeyCode.A)||Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetKeyDown(KeyCode.A)||Input.GetKeyDown(KeyCode.LeftArrow))
         {
             return Actions.left;
         }
