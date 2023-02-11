@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Flower : ImmovableEntity
-{
+{   
+    private SpriteRenderer spriteRenderer;
     public override bool getPassable()
     {
         return true;
@@ -21,7 +22,12 @@ public class Flower : ImmovableEntity
     void Start()
     {
         base.Init();
-        //TODO randdomise Position Slightly
+        float xOffset = Random.Range(-0.35f, 0.35f);
+        float yOffset = Random.Range(-0.35f, 0.35f);
+        gameObject.transform.position = new Vector3(gameObject.transform.position.x + xOffset
+            , gameObject.transform.position.y + yOffset, 0);
+
+        List<Color>
     }
 
     // Update is called once per frame
