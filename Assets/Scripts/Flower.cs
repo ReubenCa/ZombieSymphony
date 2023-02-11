@@ -27,7 +27,7 @@ public class Flower : ImmovableEntity
         gameObject.transform.position = new Vector3(gameObject.transform.position.x + xOffset
             , gameObject.transform.position.y + yOffset, 0);
 
-        List<Color>
+        
     }
 
     // Update is called once per frame
