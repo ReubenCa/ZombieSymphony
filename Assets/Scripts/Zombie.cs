@@ -9,6 +9,10 @@ using Unity.VisualScripting;
 
 public class Zombie : MoveableEntity
 {
+    private void Update()
+    {
+        base.MoveableEntityUpdate();
+    }
     private void Start()
     {
         List<(int, int)> t = Navigator.AStar(-4, -4, 4, 4);
@@ -25,7 +29,7 @@ public class Zombie : MoveableEntity
     [SerializeField]//Measured in how many moves it takes to update
     private int TargetUpdateFrequency;
 
-    private Queue<(int, int)> MovementQueue;
+    private Queue<(int, int)> MovementQueue = new Queue<(int, int)>();
     private int MovesUntilUpdate = 4;
     private int TargetAccuracy = 2;
     public override void IdleUpdate()
@@ -70,7 +74,7 @@ public static class Navigator
         return (x - BottomLeftX, y - BottomLeftY);
     }
 
-    public static void Init()
+  /*  public static void Init()
     {
         (int, int, int, int) dims = TerrainManager.Instance.GetDimensions();
         TileAllowed = new bool[dims.Item1, dims.Item2];
@@ -83,7 +87,7 @@ public static class Navigator
             }
         }
 
-    }
+    }*/
     private static int AStarHeuristic(int startX, int startY, int DestX, int DestY)
     {
         return Math.Abs(startX - DestX) + Math.Abs(startY - DestY);
@@ -94,6 +98,7 @@ public static class Navigator
         if(startX == DestX&& startY == DestY)
         {
             Debug.Log("Tried to navigate to tile its already on");
+            return new List<(int, int)> { (startX, startY) };
         }
         PriorityQueue<AStarPointData, int> PQ = new PriorityQueue<AStarPointData, int>();
         HashSet<(int,int)> ClosedPoints = new   HashSet<(int, int)>();
@@ -126,7 +131,7 @@ public static class Navigator
         }
         if (finaldat == null)
         {
-            throw new System.Exception("No path found");
+            throw new System.Exception("No path found From (" +  startX + "," + startY + ") -> (" + DestX + "," + DestY + ")");
         }
         List<(int, int)> r = new List<(int, int)>();
         AStarPointData c = finaldat;

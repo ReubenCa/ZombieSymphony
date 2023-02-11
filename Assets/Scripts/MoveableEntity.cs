@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
 using UnityEngine.Assertions;
 
 public abstract class MoveableEntity : Entity
@@ -31,7 +32,8 @@ public abstract class MoveableEntity : Entity
        
         base.Init();
         TerrainManager.Instance.SetTerrainTile(x, y, this);
-
+        x = (int)Math.Floor(gameObject.transform.position.x);
+        y = (int)Math.Floor(gameObject.transform.position.y);
     }
 
     public enum MoveableEntityState
@@ -85,7 +87,8 @@ public abstract class MoveableEntity : Entity
         Debug.Assert(State != MoveableEntityState.Moving);
         if((DestX == x) == (DestY ==y))
         {
-            throw new System.Exception("Either diagnol or zero move attempted to be schedled.");
+            return false;
+           // throw new System.Exception("Either diagnol or zero move attempted to be schedled.");
         }
         CurrentMovementX = x;
         CurrentMovementY = y;

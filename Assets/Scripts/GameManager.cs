@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Navigator.Init();
+        //Navigator.Init();
     }
 
     // Update is called once per frame
