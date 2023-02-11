@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -23,6 +24,10 @@ public class TerrainManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>(Width, Height, BLX, BLY</returns>
     public (int, int,int, int) GetDimensions()
     {
         return (Width,Height, bottomLeftx, bottomLefty);
@@ -34,7 +39,7 @@ public class TerrainManager : MonoBehaviour
     private int Height;
 
     [SerializeField]
-    private int bottomLeftx;
+    public int bottomLeftx;
 
     [SerializeField]
     private int bottomLefty;
@@ -50,9 +55,11 @@ public class TerrainManager : MonoBehaviour
         Terrain[x - bottomLeftx, y - bottomLefty].Add(entity);
     }
 
-    public void ClearFromTile(int x, int y, Entity entity)
+    public void ClearFromTile(int x, int y, Entity entity, bool supressexception =false)
     {
-        GetTerrainTile(x, y).Remove(entity);
+        bool success = GetTerrainTile(x, y).Remove(entity);
+        if (!success && !supressexception)
+            throw new System.Exception("Tried to remove Item not in list");
     }
     public bool TilePassable(int x, int y)
     {
@@ -75,7 +82,7 @@ public class TerrainManager : MonoBehaviour
         }
         // Terrain[entity.x, entity.y] = null;
         //      Terrain[NewX, NewY] = entity;
-        ClearFromTile(entity.x, entity.y, entity);
+        ClearFromTile(entity.x, entity.y, entity, true);
         SetTerrainTile(NewX, NewY, entity);
 
 
