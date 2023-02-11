@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class Player : MoveableEntity
 {
-    private PlayerStates PlayerState = PlayerStates.Idle;
+    private bool isBiting;
+
     private Animator PlayerAnimator;
-    public enum PlayerStates
-        {
-        Moving,
-        Idle
-    }
+
     void Start(){
         PlayerAnimator=GetComponent<Animator>();
         Init();
@@ -25,10 +22,20 @@ public class Player : MoveableEntity
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKey(KeyCode.Space)){
+            if(!isBiting){setBiting(true);}
+        }
+        else{
+            if(isBiting){setBiting(false);}
+        }
         base.MoveableEntityUpdate();
         base.UpdateLeftRight();
     }
 
+    void setBiting(bool newVal){
+        PlayerAnimator.SetBool("biting",newVal);
+        isBiting=newVal;
+    }
     
 
 
@@ -73,6 +80,7 @@ public class Player : MoveableEntity
     public override void ZombieSpawningUpdate()
     {
         //Terrible Software Design
+        //*Shudders*
         throw new System.Exception("Shouldnt Call Zombie Spawning On Player");
     }
 }
