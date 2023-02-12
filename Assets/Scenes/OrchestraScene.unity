@@ -7101,9 +7101,10 @@ MonoBehaviour:
   - {fileID: 846413162}
   - {fileID: 930716298}
   bpm: 120
-  forgiveness: 0.13
+  forgiveness: 0.08
   audioStarted: 0
   TimeIn8Bars: 0
+  offsetMillis: 0.04
 --- !u!1 &1880545868
 GameObject:
   m_ObjectHideFlags: 0
