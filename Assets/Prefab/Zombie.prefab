@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 5346841314750411405}
   - component: {fileID: 3190723785788061503}
   - component: {fileID: 5137838508968361031}
+  - component: {fileID: -2660274481766010209}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -323,7 +324,7 @@ MonoBehaviour:
   Mask: {fileID: 5978586408199990759}
   TimeBetweenMoves: 0.5
   MinTimeToSleep: 3
-  MaxTimeToSleep: 25
+  MaxTimeToSleep: 30
   MinTimeSleeping: 10
   MaxTimeSleeping: 15
   NoWakeUpDistance: 3
@@ -331,6 +332,18 @@ MonoBehaviour:
   TargetAccuracy: 2
   RiseFromGraveSpeed: 0.7
   DistancetoRise: 1
+--- !u!114 &-2660274481766010209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5346841314750411394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af1f1f43389111d4495a2fe7cece35cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5346841314794310203
 GameObject:
   m_ObjectHideFlags: 0

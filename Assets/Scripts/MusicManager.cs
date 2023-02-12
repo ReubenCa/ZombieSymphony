@@ -81,12 +81,13 @@ public class MusicManager : MonoBehaviour
     public bool checkIfBeat(){
 
         float TimeElapsedSinceAudioStarted=Time.time-audioStarted;
-        float actualBar=TimeElapsedSinceAudioStarted%TimeIn8Bars;
+        float actualBar=(TimeElapsedSinceAudioStarted%(TimeIn8Bars/1000))*8*1000/TimeIn8Bars;
         float minDistanceToBeat=float.MaxValue;
         foreach (float BeatPosition in PhaseBeatPositions[phase].beatPositions)
         {
             minDistanceToBeat=Mathf.Min(minDistanceToBeat,Mathf.Abs(BeatPosition-actualBar));
         }
+        Debug.Log(minDistanceToBeat);
         Debug.Log(minDistanceToBeat < forgiveness ? "HIT" : "MISS");
         return minDistanceToBeat<forgiveness;
     }

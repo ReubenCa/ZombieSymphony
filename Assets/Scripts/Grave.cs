@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Grave : ImmovableEntity
 {
-    public override bool getPassable()
+    public override bool getPassable(bool CanPassthroughZombies)
     {
         return false;
     }

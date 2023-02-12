@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
-    public abstract bool getPassable();
+    public abstract bool getPassable(bool CanPassthroughZombies);
 
     public virtual void onContact()
     {

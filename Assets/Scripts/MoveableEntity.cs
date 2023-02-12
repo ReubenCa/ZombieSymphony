@@ -28,10 +28,7 @@ public abstract class MoveableEntity : Entity
     public float TimeToMove;
     protected MoveableEntityState State = MoveableEntityState.Idle;
 
-    public override bool getPassable()
-    {
-        return true;
-    }
+ 
 
     protected new void Init()
     {

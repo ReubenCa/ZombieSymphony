@@ -61,17 +61,17 @@ public class TerrainManager : MonoBehaviour
         if (!success && !supressexception)
             throw new System.Exception("Tried to remove Item not in list");
     }
-    public bool TilePassable(int x, int y)
+    public bool TilePassable(int x, int y, bool AllowedToPassThroughZombies = true)
     {
         
-        return  GetTerrainTile(x, y).TrueForAll(t => t.getPassable());
+        return  GetTerrainTile(x, y).TrueForAll(t => t.getPassable(AllowedToPassThroughZombies));
     }
 
-    public bool PositionValid(int x, int y)
+    public bool PositionValid(int x, int y, bool CanPassThroughZombies = true)
     {
         return x >= bottomLeftx && y >= bottomLefty
             && x < Width + bottomLeftx && y < Height + bottomLefty &&
-             TilePassable(x,y);
+             TilePassable(x,y, CanPassThroughZombies);
     }
 
     public void EntityMoving(MoveableEntity entity, int NewX, int NewY)

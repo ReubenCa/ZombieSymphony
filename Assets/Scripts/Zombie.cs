@@ -38,7 +38,7 @@ public class Zombie : MoveableEntity
         if(TimeSinceLastSleep>NextSleepTime && State ==MoveableEntityState.Idle)
         {
             State = MoveableEntityState.Sleeping;
-            Debug.Log("Calling Sleep Animation");
+           //Debug.Log("Calling Sleep Animation");
             PlayerAnimator.Play("ZombieSleeping");
             NextWakeUpTime = UnityEngine.Random.Range(MinTimeSleeping, MaxTimeSleeping);
         }
@@ -105,14 +105,18 @@ public class Zombie : MoveableEntity
             return;
         }
         TimesinceLastMove = 0;
-        if (MovesUntilUpdate <= 0 || MovementQueue.Count ==0) {
+        if (MovesUntilUpdate <= 0 || MovementQueue == null || MovementQueue.Count ==0) {
             (int, int) NewTarget = PickTarget();
            // Debug.Log("New Tartget: " + NewTarget);
             if (NewTarget.Item1 == x && NewTarget.Item2 == y)
             {
                 return;
             }
-            MovementQueue = new Queue<(int, int)>(Navigator.AStar(x, y, NewTarget.Item1, NewTarget.Item2));
+            List<(int, int)> AStarResult = Navigator.AStar(x, y, NewTarget.Item1, NewTarget.Item2);
+            if (AStarResult == null)
+                return;
+            MovementQueue = new Queue<(int, int)>(AStarResult);
+           
             MovementQueue.Dequeue();
             MovesUntilUpdate = TargetUpdateFrequency;
         }
@@ -188,12 +192,17 @@ public class Zombie : MoveableEntity
 
         if (!Player.Instance.isBiting)
         {
-            Debug.Log("player not biting");
+           // Debug.Log("player not biting");
             return;
         }
         GameManager.instance.ZombieDied();
         TerrainManager.Instance.ClearFromTile(x, y, this);
         Destroy(gameObject);
+    }
+
+    public override bool getPassable(bool CanPassthroughZombies)
+    {
+        return CanPassthroughZombies;
     }
 }
 

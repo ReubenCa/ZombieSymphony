@@ -5,7 +5,7 @@ using UnityEngine;
 public class Flower : ImmovableEntity
 {   
     private SpriteRenderer spriteRenderer;
-    public override bool getPassable()
+    public override bool getPassable(bool CanPassthroughZombies)
     {
         return true;
     }
