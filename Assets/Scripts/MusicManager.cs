@@ -24,6 +24,7 @@ public class MusicManager : MonoBehaviour
     private float TimeInBar;
     [HideInInspector]
     public float TimeIn8Bars;
+    public float offsetMillis;
     private AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
@@ -87,7 +88,7 @@ public class MusicManager : MonoBehaviour
         float minDistanceToBeat=float.MaxValue;
         foreach (float BeatPosition in PhaseBeatPositions[phase].beatPositions)
         {
-            minDistanceToBeat=Mathf.Min(minDistanceToBeat,Mathf.Abs(BeatPosition-actualBar));
+            minDistanceToBeat=Mathf.Min(minDistanceToBeat,Mathf.Abs(BeatPosition-actualBar+offsetMillis));
             //Debug.Log(-BeatPosition + actualBar);
         }
         //Debug.Log(minDistanceToBeat);
