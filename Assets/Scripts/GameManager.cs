@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -93,6 +94,7 @@ public class GameManager : MonoBehaviour
     int ZombiesAlive = 0;
     void Update()
     {
+        FlowerText.text = FlowersCollected.ToString();
         timesincelastzombiespawn += Time.deltaTime / (ZombiesAlive + 1);
         //new List<float> { 1f,2f}
         if((ZombiesAlive == 0 || timesincelastzombiespawn > NextSpawnCriteria) && SpawnZombies)
@@ -159,4 +161,8 @@ public class GameManager : MonoBehaviour
 
         FlowersCurrentlyInScene++;
     }
+
+    [SerializeField]
+    private TextMeshProUGUI FlowerText;
+
 }
