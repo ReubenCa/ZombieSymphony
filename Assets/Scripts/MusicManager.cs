@@ -47,6 +47,9 @@ public class MusicManager : MonoBehaviour
 
 
     public void loadPhaseWhenReady(int newPhase){
+        audioSource = GetComponent<AudioSource>();
+        TimeInBar = 60000 / (bpm / 4); //In Millseconds
+        TimeIn8Bars = TimeInBar * 8;
         float TimeElapsedSinceAudioStarted=Time.time-audioStarted;
         float actualBar=(TimeElapsedSinceAudioStarted%(TimeIn8Bars/1000))*8*1000/TimeIn8Bars;
         float timeUntilNextBar = TimeIn8Bars/1000-actualBar;

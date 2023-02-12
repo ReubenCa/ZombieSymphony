@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     public void MoveNotOnBeat()
     {
         Lives -= 1;
+        gameObject.GetComponent<AudioSource>().Play();
         HeartsManager.instance.OnLifeLost(Lives);
         if(Lives < 0 && !godMode)
         {
