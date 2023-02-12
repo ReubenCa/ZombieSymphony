@@ -207,7 +207,7 @@ public class Zombie : MoveableEntity
     {
         if (State != MoveableEntityState.Sleeping)
         {
-            GameManager.instance.PlayerDead();
+            GameManager.instance.PlayerBitten();
             return;
         }
 
