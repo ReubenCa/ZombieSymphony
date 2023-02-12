@@ -13,6 +13,11 @@ public class InputManager : MonoBehaviour
         }
         Instance = this; 
     }
+
+    private void Update()
+    {
+        TimeSinceLastMove += Time.deltaTime;
+    }
     public enum Actions
         {
         up,
@@ -20,8 +25,13 @@ public class InputManager : MonoBehaviour
         none
     }
     // Update is called once per frame
+    float TimeSinceLastMove = 0f;
     public Actions getInput()
     {
+        float a = TimeSinceLastMove;
+        if (TimeSinceLastMove < 0.1f)
+            return Actions.none;
+        TimeSinceLastMove = 0f;
      //   Debug.Log("Updating");
         if(Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -39,6 +49,7 @@ public class InputManager : MonoBehaviour
         {
             return Actions.left;
         }
+        TimeSinceLastMove = a;
         return Actions.none;
     }
 }
