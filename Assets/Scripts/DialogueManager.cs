@@ -37,8 +37,8 @@ public class DialogueManager : MonoBehaviour
         int startDialogue=0;
         if(phase!=0){
             if(phase==1){startDialogue=7;}
-            if(phase==2){startDialogue=12;}
-            if(phase==3){startDialogue=19;}
+            if(phase==2){startDialogue=12;musicManager.loadPhaseWhenReady(1);}
+            if(phase==3){startDialogue=19;musicManager.loadPhaseWhenReady(1);}
         }
         foreach (DialogueLine dialogueLine in dialogue.GetRange(startDialogue,dialogue.Count-startDialogue))
         {
