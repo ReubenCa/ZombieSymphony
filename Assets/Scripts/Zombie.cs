@@ -107,10 +107,18 @@ public class Zombie : MoveableEntity
         foreach (Entity possibleGrave in TerrainManager.Instance.GetTerrainTile(x, y))
         {
             Debug.Log(possibleGrave);
-            if (possibleGrave.gameObject.tag == "grave")
+            try
             {
-                possibleGrave.gameObject.GetComponentInChildren<Animator>().Play("GraveExplosion");
-                Debug.Log("PLayed");
+                if (possibleGrave.gameObject.tag == "grave")
+                {
+                    possibleGrave.gameObject.GetComponentInChildren<Animator>().Play("GraveExplosion");
+                    Debug.Log("PLayed");
+                }
+
+            }
+            catch
+            {
+                //Sometimes this loop would access dead zombies and crash 
             }
         }
     }
@@ -219,7 +227,7 @@ public class Zombie : MoveableEntity
 
     public override void onContact()
     {
-        if (State != MoveableEntityState.Sleeping)
+        if (State != MoveableEntityState.Sleeping && State!= MoveableEntityState.Dying)
         {
             GameManager.instance.PlayerBitten();
             return;
@@ -232,7 +240,7 @@ public class Zombie : MoveableEntity
         }
         PlayerAnimator.Play("ZombieBitten");
         GameManager.instance.ZombieDied();
-        TerrainManager.Instance.ClearFromTile(x, y, this);
+        //TerrainManager.Instance.ClearFromTile(x, y, this);
         State = MoveableEntityState.Dying;
     }
 
@@ -248,6 +256,7 @@ public class Zombie : MoveableEntity
         {
             return;
         }
+        TerrainManager.Instance.ClearFromTile(x, y, this);
         Destroy(gameObject);
     }
 }

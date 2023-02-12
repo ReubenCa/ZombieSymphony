@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         BetweenScenesData.WokeZombies = true;
         ranout = true;
         foreach(Grave grave in AllGraves) { 
-        SpawnZombie(grave,1,1,1000,10000,1,1,0.1f);
+        SpawnZombie(grave,1,1,1000,10000,1,1,Random.Range(0.1f,0.3f));
         }
     }
 

@@ -16,7 +16,7 @@ public class MusicManager : MonoBehaviour
     public List<AudioClip> PhaseAudioClip;
     public List<OrchestraZombie> ZombiesToTrigger;
     public int bpm;
-    public float forgiveness; //In Millisecond
+    public float BaseForgiveness; //In Millisecond
     [HideInInspector]
     public float audioStarted;
     private int phase = 0;// Starts at Phase 0
@@ -80,6 +80,14 @@ public class MusicManager : MonoBehaviour
 
     float totalmiss;
     int totalattempts;
+    [SerializeField]
+    float ForgivenessDecayPerSecond;
+    [SerializeField]
+    float ForgivenessAsymptopicMinimum;
+
+
+    [SerializeField]
+    float CurrentForgiveness;
     public bool checkIfBeat(){
 
         float TimeElapsedSinceAudioStarted=Time.time-audioStarted;
@@ -94,6 +102,8 @@ public class MusicManager : MonoBehaviour
         //Debug.Log(minDistanceToBeat < forgiveness ? "HIT" : "MISS");
 
         //Debug.Log("");
-        return minDistanceToBeat<forgiveness;
+        CurrentForgiveness = (BaseForgiveness * ForgivenessAsymptopicMinimum + BaseForgiveness *
+            (1 - ForgivenessAsymptopicMinimum) * Mathf.Pow(1-ForgivenessDecayPerSecond, TimeElapsedSinceAudioStarted));
+        return minDistanceToBeat < CurrentForgiveness;
     }
 }
