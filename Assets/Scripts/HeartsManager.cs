@@ -29,6 +29,7 @@ public class HeartsManager : MonoBehaviour
         }
         catch {//In God mode theere may not be a heart to represent lost life
                }
+        
     }
 
     public void UpdateHealth(float Health)
