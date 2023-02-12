@@ -27,7 +27,7 @@ public class OrchestraZombie : MonoBehaviour
     }
     void checkPlay(){
         spriteRenderer.sprite=normalSprite;
-        float TimeElapsedSinceAudioStarted=Time.time-manager.audioStarted;
+        float TimeElapsedSinceAudioStarted=Time.time/1000f-manager.audioStarted;
         float actualBar=(TimeElapsedSinceAudioStarted%manager.TimeIn8Bars)*8*1000/manager.TimeIn8Bars;
         Debug.Log(actualBar);
         foreach (float BeatPosition in beatPositions.beatPositions)
