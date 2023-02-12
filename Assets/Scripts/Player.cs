@@ -112,4 +112,9 @@ public class Player : MoveableEntity
     {
         return true;
     }
+
+    public override void DyingUpdate()
+    {
+        throw new System.NotImplementedException();
+    }
 }

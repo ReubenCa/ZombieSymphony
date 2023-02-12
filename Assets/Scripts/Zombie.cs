@@ -226,14 +226,25 @@ public class Zombie : MoveableEntity
             // Debug.Log("player not biting");
             return;
         }
+        PlayerAnimator.Play("ZombieBitten");
         GameManager.instance.ZombieDied();
         TerrainManager.Instance.ClearFromTile(x, y, this);
-        Destroy(gameObject);
+        State = MoveableEntityState.Dying;
     }
 
     public override bool getPassable(bool CanPassthroughZombies)
     {
         return CanPassthroughZombies;
+    }
+    float TimeSpendDying = 0f;
+    public override void DyingUpdate()
+    {
+        TimeSpendDying+= Time.deltaTime;
+        if(TimeSpendDying< 1f)
+        {
+            return;
+        }
+        Destroy(gameObject);
     }
 }
 

@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     public void MoveNotOnBeat()
     {
         Lives -= 1;
-        if(Lives < 0)
+        if(Lives < 0 && !godMode)
         {
             PlayerOutOfLives();
         }
