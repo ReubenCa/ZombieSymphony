@@ -1349,8 +1349,8 @@ MonoBehaviour:
   godMode: 0
   SpawnFlowers: 1
   LifeRegenRate: 0.03
-  BaseMinZombieSpawn: 8
-  BaseMaxZombieSpawn: 15
+  BaseMinZombieSpawn: 5
+  BaseMaxZombieSpawn: 10
   SpawnZombies: 0
   ZombiePrefab: {fileID: 5346841314750411394, guid: d9b5638108396368eac9ad22a69e1e97, type: 3}
   FlowerText: {fileID: 1946219785}
