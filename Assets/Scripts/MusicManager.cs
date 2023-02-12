@@ -88,12 +88,12 @@ public class MusicManager : MonoBehaviour
         foreach (float BeatPosition in PhaseBeatPositions[phase].beatPositions)
         {
             minDistanceToBeat=Mathf.Min(minDistanceToBeat,Mathf.Abs(BeatPosition-actualBar));
-            Debug.Log(-BeatPosition + actualBar);
+            //Debug.Log(-BeatPosition + actualBar);
         }
         //Debug.Log(minDistanceToBeat);
-        Debug.Log(minDistanceToBeat < forgiveness ? "HIT" : "MISS");
+        //Debug.Log(minDistanceToBeat < forgiveness ? "HIT" : "MISS");
 
-        Debug.Log("");
+        //Debug.Log("");
         return minDistanceToBeat<forgiveness;
     }
 }
