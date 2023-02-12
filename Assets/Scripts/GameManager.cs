@@ -50,9 +50,10 @@ public class GameManager : MonoBehaviour
         if (ranout)
             return;
         Lives = -10;
+        BetweenScenesData.WokeZombies = true;
         ranout = true;
         foreach(Grave grave in AllGraves) { 
-        SpawnZombie(grave,1,1,1000,10000,1,1);
+        SpawnZombie(grave,1,1,1000,10000,1,1,0.1f);
         }
     }
 
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour
     {
         if(!godMode)
         {
+            BetweenScenesData.score = FlowersCollected;
             SceneManager.LoadScene("DeathScene");
         }
     }
@@ -123,7 +125,8 @@ public class GameManager : MonoBehaviour
 
 
     public Zombie SpawnZombie(Grave spawngrave = null, int TargetAccuracy = 2, int TargetUpdateFreq = 4, 
-        float MinTimetoSleep = 3, float MaxTimeToSleep = 30, float MaxTimeSleeping = 12, float minTimeSleeping = 7 )
+        float MinTimetoSleep = 3, float MaxTimeToSleep = 30, float MaxTimeSleeping = 12, float minTimeSleeping = 7 ,
+       float TimeToMove = -10)
     {
         if (spawngrave == null)
         {
@@ -134,7 +137,7 @@ public class GameManager : MonoBehaviour
         ZombiesAlive++;
         GameObject zombie = Instantiate(ZombiePrefab, new Vector3((float)spawngrave.BottomLeftX, (float)spawngrave.BottomLeftY, 0), Quaternion.identity);
         Zombie zombieComp =  zombie.GetComponent<Zombie>();
-        zombieComp.SetStats(MinTimetoSleep, MaxTimeToSleep,MaxTimeSleeping,minTimeSleeping,TargetAccuracy, TargetUpdateFreq);
+        zombieComp.SetStats(MinTimetoSleep, MaxTimeToSleep,MaxTimeSleeping,minTimeSleeping,TargetAccuracy, TargetUpdateFreq, TimeToMove);
         return zombieComp;
 
         
