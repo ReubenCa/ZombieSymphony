@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class GameManager : MonoBehaviour
         AllGraves = new List<Grave>();
     }
 
-
+    
     public List<Grave> AllGraves { private set; get;}
 
     [SerializeField]
@@ -39,13 +40,28 @@ public class GameManager : MonoBehaviour
         Lives -= 1;
         if(Lives < 0)
         {
-            PlayerDead();
+            PlayerOutOfLives();
+        }
+    }
+    bool ranout = false;
+    private void PlayerOutOfLives()
+    {
+        if (ranout)
+            return;
+        ranout = true;
+        foreach(Grave grave in AllGraves) { 
+        SpawnZombie(grave);
         }
     }
 
-    public void PlayerDead()
+    [SerializeField]
+    bool godMode = false;
+    public void PlayerBitten()
     {
-        //Debug.Log("THE PLAYER IS DEAD");
+        if(!godMode)
+        {
+            SceneManager.LoadScene("DeathScene");
+        }
     }
     public void onFlowerCollected()
     {
@@ -103,11 +119,17 @@ public class GameManager : MonoBehaviour
     GameObject ZombiePrefab;
     public Zombie SpawnZombie()
     {
-        ZombiesAlive++;
+        
         Grave spawngrave = AllGraves[Random.Range(0, AllGraves.Count)];
+        return SpawnZombie(spawngrave);
+    }
 
-        GameObject zombie = Instantiate(ZombiePrefab, new Vector3((float)spawngrave.BottomLeftX,(float)spawngrave.BottomLeftY,0), Quaternion.identity);
-        return zombie.GetComponent<Zombie>();
+    public Zombie SpawnZombie(Grave spawngrave)
+    {
+        ZombiesAlive++;
+        GameObject zombie = Instantiate(ZombiePrefab, new Vector3((float)spawngrave.BottomLeftX, (float)spawngrave.BottomLeftY, 0), Quaternion.identity);
+            return zombie.GetComponent<Zombie>();
+        
     }
     
     public void SpawnFlower()
