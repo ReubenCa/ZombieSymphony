@@ -10,6 +10,11 @@ using System.Net.NetworkInformation;
 public class Zombie : MoveableEntity
 {
     [SerializeField]
+    Sprite AwakeHeadSprite;
+
+    private SpriteRenderer spriteRenderer;
+
+    [SerializeField]
     private GameObject Mask;
     [SerializeField]
     float TimeBetweenMoves;
@@ -46,6 +51,8 @@ public class Zombie : MoveableEntity
     private Animator PlayerAnimator;
     private void Update()
     {
+        if (MoveableEntityState.Sleeping != State && State != MoveableEntityState.Dying)
+            spriteRenderer.sprite = AwakeHeadSprite;
 
         if (State != MoveableEntityState.ZombieSpawning && State != MoveableEntityState.Sleeping)
             TimeSinceLastSleep += Time.deltaTime;
@@ -85,6 +92,7 @@ public class Zombie : MoveableEntity
     private void Start()
     {
         base.Init();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         PlayerAnimator = GetComponent<Animator>();
         Invoke("rise", 0.01f);
         NextSleepTime = UnityEngine.Random.Range(MinTimeToSleep, MaxTimeToSleep);
