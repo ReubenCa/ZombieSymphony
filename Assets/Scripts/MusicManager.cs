@@ -32,7 +32,7 @@ public class MusicManager : MonoBehaviour
         TimeInBar=60000/(bpm/4); //In Millseconds
         TimeIn8Bars=TimeInBar*8;
         loadPhase(0);
-        StartCoroutine(callPhases(new List<float>{0f,16f,16f,16f,16f,16f}));
+        StartCoroutine(callPhases(new List<float>{39f,70f,32f,32f,32f,32f}));
     }
 
     IEnumerator callPhases(List<float> TimePerPhase){
@@ -48,8 +48,8 @@ public class MusicManager : MonoBehaviour
 
     public void loadPhaseWhenReady(int newPhase){
         float TimeElapsedSinceAudioStarted=Time.time-audioStarted;
-        float actualBar=TimeElapsedSinceAudioStarted%TimeIn8Bars;
-        float timeUntilNextBar = TimeIn8Bars-actualBar;
+        float actualBar=(TimeElapsedSinceAudioStarted%(TimeIn8Bars/1000))*8*1000/TimeIn8Bars;
+        float timeUntilNextBar = TimeIn8Bars/1000-actualBar;
         nextPhase=newPhase;
         Debug.Log(timeUntilNextBar);
         Invoke("loadPhase",timeUntilNextBar/1000f);

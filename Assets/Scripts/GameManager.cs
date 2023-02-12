@@ -70,8 +70,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     float BaseMaxZombieSpawn;
 
-    [SerializeField]
-    bool SpawnZombies = true;
+    public bool SpawnZombies = true;
     float timesincelastzombiespawn = 0f;
     float NextSpawnCriteria = 0f;
     int ZombiesAlive = 0;
@@ -102,13 +101,13 @@ public class GameManager : MonoBehaviour
     }
     [SerializeField]
     GameObject ZombiePrefab;
-    public void SpawnZombie()
+    public Zombie SpawnZombie()
     {
         ZombiesAlive++;
         Grave spawngrave = AllGraves[Random.Range(0, AllGraves.Count)];
 
-       Instantiate(ZombiePrefab, new Vector3((float)spawngrave.BottomLeftX,(float)spawngrave.BottomLeftY,0), Quaternion.identity);
-        
+        GameObject zombie = Instantiate(ZombiePrefab, new Vector3((float)spawngrave.BottomLeftX,(float)spawngrave.BottomLeftY,0), Quaternion.identity);
+        return zombie.GetComponent<Zombie>();
     }
     
     public void SpawnFlower()

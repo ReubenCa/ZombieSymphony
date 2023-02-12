@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class ZBuffer : MonoBehaviour
 {
-     float Ratio = 0.01f;
-    [SerializeField]
-    float Offset = 0f;
+     float Ratio = 2f;
+     public int offset;
     private void Update()
     {
-        gameObject.transform.position = new Vector3(gameObject.transform.position.x, 
-            gameObject.transform.position.y, gameObject.transform.position.y * Ratio +Offset);
+        foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
+        {
+            sr.sortingOrder=(int)Mathf.Floor(-gameObject.transform.position.y * Ratio)+offset;
+        }
     }
 }

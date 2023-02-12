@@ -32,13 +32,13 @@ public class Zombie : MoveableEntity
     private Animator PlayerAnimator;
     private void Update()
     {
-        
-        if (State != MoveableEntityState.ZombieSpawning && State!= MoveableEntityState.Sleeping)   
+
+        if (State != MoveableEntityState.ZombieSpawning && State != MoveableEntityState.Sleeping)
             TimeSinceLastSleep += Time.deltaTime;
-        if(TimeSinceLastSleep>NextSleepTime && State ==MoveableEntityState.Idle)
+        if (TimeSinceLastSleep > NextSleepTime && State == MoveableEntityState.Idle)
         {
             State = MoveableEntityState.Sleeping;
-           //Debug.Log("Calling Sleep Animation");
+            //Debug.Log("Calling Sleep Animation");
             PlayerAnimator.Play("ZombieSleeping");
             NextWakeUpTime = UnityEngine.Random.Range(MinTimeSleeping, MaxTimeSleeping);
         }
@@ -46,11 +46,18 @@ public class Zombie : MoveableEntity
         base.MoveableEntityUpdate();
         base.UpdateLeftRight();
     }
+    public void goSleepForever()
+    {
+        State = MoveableEntityState.Sleeping;
+        //Debug.Log("Calling Sleep Animation");
+        PlayerAnimator.Play("ZombieSleeping");
+        NextWakeUpTime = float.MaxValue;
+    }
     float NextWakeUpTime;
     public override void SleepUpdate()
     {
-        TimeAsleep+=Time.deltaTime;
-        if (TimeAsleep > NextWakeUpTime && Navigator.AStarHeuristic(x, y, PlayerX, PlayerY) > NoWakeUpDistance) 
+        TimeAsleep += Time.deltaTime;
+        if (TimeAsleep > NextWakeUpTime && Navigator.AStarHeuristic(x, y, PlayerX, PlayerY) > NoWakeUpDistance)
         {
             PlayerAnimator.Play("PlayerIdle");
             State = MoveableEntityState.Idle;
@@ -64,28 +71,37 @@ public class Zombie : MoveableEntity
     private void Start()
     {
         base.Init();
-        PlayerAnimator=GetComponent<Animator>();
-        Invoke("rise",0.01f);
-        NextSleepTime= UnityEngine.Random.Range(MinTimeToSleep, MaxTimeToSleep);
+        PlayerAnimator = GetComponent<Animator>();
+        Invoke("rise", 0.01f);
+        NextSleepTime = UnityEngine.Random.Range(MinTimeToSleep, MaxTimeToSleep);
     }
-    private void rise(){
+    private void rise()
+    {
         State = MoveableEntityState.ZombieSpawning;
         OriginalY = gameObject.transform.position.y - DistancetoRise;
         gameObject.transform.position = new Vector3(gameObject.transform.position.x,
             OriginalY - DistancetoRise, gameObject.transform.position.z);
         Mask.gameObject.SetActive(true);
+        foreach (SpriteRenderer sp in GetComponentsInChildren<SpriteRenderer>())
+        {
+            sp.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+        }
+        int orderInLayer = GetComponentInChildren<SpriteRenderer>().sortingOrder + 1;
+        Mask.GetComponent<SpriteMask>().frontSortingOrder = orderInLayer + 4;
+        Mask.GetComponent<SpriteMask>().backSortingOrder = orderInLayer - 4;
         //Find Grave
-        foreach (Entity possibleGrave in TerrainManager.Instance.GetTerrainTile(x,y))
+        foreach (Entity possibleGrave in TerrainManager.Instance.GetTerrainTile(x, y))
         {
             Debug.Log(possibleGrave);
-            if(possibleGrave.gameObject.tag=="grave"){
+            if (possibleGrave.gameObject.tag == "grave")
+            {
                 possibleGrave.gameObject.GetComponentInChildren<Animator>().Play("GraveExplosion");
                 Debug.Log("PLayed");
             }
         }
     }
 
-  
+
 
     public static int PlayerX;
     public static int PlayerY;
@@ -99,15 +115,16 @@ public class Zombie : MoveableEntity
     private int TargetAccuracy = 2;
     public override void IdleUpdate()
     {
-        if(TimesinceLastMove < TimeBetweenMoves)
+        if (TimesinceLastMove < TimeBetweenMoves)
         {
             TimesinceLastMove += Time.deltaTime;
             return;
         }
         TimesinceLastMove = 0;
-        if (MovesUntilUpdate <= 0 || MovementQueue == null || MovementQueue.Count ==0) {
+        if (MovesUntilUpdate <= 0 || MovementQueue == null || MovementQueue.Count == 0)
+        {
             (int, int) NewTarget = PickTarget();
-           // Debug.Log("New Tartget: " + NewTarget);
+            // Debug.Log("New Tartget: " + NewTarget);
             if (NewTarget.Item1 == x && NewTarget.Item2 == y)
             {
                 return;
@@ -116,11 +133,11 @@ public class Zombie : MoveableEntity
             if (AStarResult == null)
                 return;
             MovementQueue = new Queue<(int, int)>(AStarResult);
-           
+
             MovementQueue.Dequeue();
             MovesUntilUpdate = TargetUpdateFrequency;
         }
-        (int,int) NextMove = MovementQueue.Dequeue();
+        (int, int) NextMove = MovementQueue.Dequeue();
 
         int dx = x;
         int dy = y;
@@ -142,20 +159,20 @@ public class Zombie : MoveableEntity
 
         MovesUntilUpdate--;
     }
-    
-    
+
+
     static System.Random rand = new System.Random();
 
-    private (int,int) PickTarget()
+    private (int, int) PickTarget()
     {
         int targetx = -100;
         int targety = -100;
-        while(!TerrainManager.Instance.PositionValid(targetx, targety))
+        while (!TerrainManager.Instance.PositionValid(targetx, targety))
         {
             targetx = rand.Next(PlayerX - TargetAccuracy, PlayerX + TargetAccuracy);
             targety = rand.Next(PlayerY - TargetAccuracy, PlayerY + TargetAccuracy);
         }
-        return (targetx,targety);
+        return (targetx, targety);
     }
     [SerializeField]
     float RiseFromGraveSpeed;
@@ -166,7 +183,7 @@ public class Zombie : MoveableEntity
     private float OriginalY;
     public override void ZombieSpawningUpdate()
     {
-        float deltay= RiseFromGraveSpeed * Time.deltaTime;
+        float deltay = RiseFromGraveSpeed * Time.deltaTime;
         float newy = gameObject.transform.position.y + deltay;
         Mask.gameObject.transform.position = new Vector3(Mask.gameObject.transform.position.x,
             Mask.gameObject.transform.position.y - deltay, Mask.gameObject.transform.position.z);
@@ -174,17 +191,21 @@ public class Zombie : MoveableEntity
         {
             newy = DistancetoRise + OriginalY;
             State = MoveableEntityState.Idle;
-            Mask.gameObject.SetActive(false) ;
+            foreach (SpriteRenderer sp in GetComponentsInChildren<SpriteRenderer>())
+            {
+                sp.maskInteraction = SpriteMaskInteraction.None;
+            }
+            Mask.gameObject.SetActive(false);
         }
         gameObject.transform.position = new Vector3(gameObject.transform.position.x, newy, gameObject.transform.position.z);
         distancerisen += newy;
-        
+
     }
 
 
     public override void onContact()
     {
-        if(State!= MoveableEntityState.Sleeping)
+        if (State != MoveableEntityState.Sleeping)
         {
             GameManager.instance.PlayerDead();
             return;
@@ -192,7 +213,7 @@ public class Zombie : MoveableEntity
 
         if (!Player.Instance.isBiting)
         {
-           // Debug.Log("player not biting");
+            // Debug.Log("player not biting");
             return;
         }
         GameManager.instance.ZombieDied();
