@@ -78,7 +78,8 @@ public class MusicManager : MonoBehaviour
 
     // Update is called once per frame
 
-
+    float totalmiss;
+    int totalattempts;
     public bool checkIfBeat(){
 
         float TimeElapsedSinceAudioStarted=Time.time-audioStarted;
@@ -87,9 +88,12 @@ public class MusicManager : MonoBehaviour
         foreach (float BeatPosition in PhaseBeatPositions[phase].beatPositions)
         {
             minDistanceToBeat=Mathf.Min(minDistanceToBeat,Mathf.Abs(BeatPosition-actualBar));
+            Debug.Log(-BeatPosition + actualBar);
         }
         //Debug.Log(minDistanceToBeat);
         Debug.Log(minDistanceToBeat < forgiveness ? "HIT" : "MISS");
+
+        Debug.Log("");
         return minDistanceToBeat<forgiveness;
     }
 }
