@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
         //new List<float> { 1f,2f}
         if((ZombiesAlive == 0 || timesincelastzombiespawn > NextSpawnCriteria) && SpawnZombies)
         {
-            SpawnZombie();
+            SpawnZombie(null, Random.Range(1,6), Random.Range(2,4));
             timesincelastzombiespawn = 0;
             NextSpawnCriteria = Random.Range(BaseMinZombieSpawn, BaseMaxZombieSpawn);
         }
