@@ -66,10 +66,11 @@ public class DialogueManager : MonoBehaviour
         PlayerPrefs.SetInt("tutorialphase",3);
         gameManager.SpawnFlowers=true;
         gameManager.SpawnZombies=true;
-        gameObject.SetActive(false);
+        
         graveDiggerAnimation.Play("GraveDiggerLeave");
         musicManager.loadPhaseWhenReady(2);
         StartCoroutine(musicManager.callLastPhases(new List<float>{32f,32f,32f,32f}));
+        gameObject.SetActive(false);
     }
     // Update is called once per frame
     void Update()

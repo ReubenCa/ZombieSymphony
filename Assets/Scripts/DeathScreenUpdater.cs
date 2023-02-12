@@ -8,8 +8,7 @@ public class DeathScreenUpdater : MonoBehaviour
     [SerializeField]
     TMP_Text ScoreText;
 
-    [SerializeField]
-    TextMeshProUGUI WokeZombiestext;
+  
     // Start is called before the first frame update
     void Start()
     {
