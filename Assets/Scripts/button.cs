@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class button : MonoBehaviour
 {
+    public bool skipTutorial;
     public SpriteRenderer colourChangeOnHover;
     private bool mouseOver;
     // Start is called before the first frame update
@@ -22,15 +23,22 @@ public class button : MonoBehaviour
     }
     private void OnMouseDown() {
         if(mouseOver){
-            SceneManager.LoadScene("OrchestraScene");
+            press();
+            
         }
+    }
+    void press(){
+        if(skipTutorial){
+            PlayerPrefs.SetInt("tutorialphase",3);
+        }
+        SceneManager.LoadScene("OrchestraScene");
     }
 
     // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Return)||Input.GetKeyDown(KeyCode.Space)){
-            SceneManager.LoadScene("OrchestraScene");
+            press();
         }
     }
 }

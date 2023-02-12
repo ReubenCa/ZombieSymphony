@@ -33,11 +33,10 @@ public class MusicManager : MonoBehaviour
         TimeInBar=60000/(bpm/4); //In Millseconds
         TimeIn8Bars=TimeInBar*8;
         loadPhase(0);
-        StartCoroutine(callPhases(new List<float>{39f,70f,32f,32f,32f,32f}));
     }
 
-    IEnumerator callPhases(List<float> TimePerPhase){
-        for (int i = 0; i < 5; i++)
+    public IEnumerator callLastPhases(List<float> TimePerPhase){
+        for (int i = 2; i < 5; i++)
         {
             Debug.Log("Waiting for: "+TimePerPhase[i]);
             yield return new WaitForSeconds(TimePerPhase[i]);
