@@ -326,9 +326,11 @@ MonoBehaviour:
   TimeBetweenMoves: 0.5
   MinTimeToSleep: 3
   MaxTimeToSleep: 30
-  MinTimeSleeping: 10
-  MaxTimeSleeping: 15
+  MinTimeSleeping: 1
+  MaxTimeSleeping: 2
   NoWakeUpDistance: 3
+  SleepyHead: {fileID: 21300000, guid: 9facc78a41223460abbed33e6bf5ca36, type: 3}
+  HeadspriteRenderer: {fileID: 5346841314088069237}
   TargetUpdateFrequency: 5
   TargetAccuracy: 2
   RiseFromGraveSpeed: 0.7
@@ -619,7 +621,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1283311005149808120
 Transform:
   m_ObjectHideFlags: 0

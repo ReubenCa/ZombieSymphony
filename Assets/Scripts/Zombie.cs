@@ -12,7 +12,7 @@ public class Zombie : MoveableEntity
     [SerializeField]
     Sprite AwakeHeadSprite;
 
-    private SpriteRenderer spriteRenderer;
+    
 
     [SerializeField]
     private GameObject Mask;
@@ -49,12 +49,16 @@ public class Zombie : MoveableEntity
 
     private float TimesinceLastMove = 0;
     private Animator PlayerAnimator;
+    [SerializeField]
+    Sprite SleepyHead;
     private void Update()
     {
         if (MoveableEntityState.Sleeping != State && State != MoveableEntityState.Dying)
-            spriteRenderer.sprite = AwakeHeadSprite;
+            HeadspriteRenderer.sprite = AwakeHeadSprite;
+        else if (MoveableEntityState.Sleeping == State)
+            HeadspriteRenderer.sprite = SleepyHead;
 
-        if (State != MoveableEntityState.ZombieSpawning && State != MoveableEntityState.Sleeping)
+            if (State != MoveableEntityState.ZombieSpawning && State != MoveableEntityState.Sleeping)
             TimeSinceLastSleep += Time.deltaTime;
         if (TimeSinceLastSleep > NextSleepTime && State == MoveableEntityState.Idle)
         {
@@ -89,10 +93,12 @@ public class Zombie : MoveableEntity
 
     }
     float NextSleepTime;
+    [SerializeField]
+   SpriteRenderer HeadspriteRenderer;
     private void Start()
     {
         base.Init();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        
         PlayerAnimator = GetComponent<Animator>();
         Invoke("rise", 0.01f);
         NextSleepTime = UnityEngine.Random.Range(MinTimeToSleep, MaxTimeToSleep);
@@ -235,11 +241,14 @@ public class Zombie : MoveableEntity
 
     public override void onContact()
     {
+        if (MoveableEntityState.Dying == State)
+            return;
         if (State != MoveableEntityState.Sleeping && State!= MoveableEntityState.Dying)
         {
             GameManager.instance.PlayerBitten();
             return;
         }
+        
 
         if (!Player.Instance.isBiting)
         {
