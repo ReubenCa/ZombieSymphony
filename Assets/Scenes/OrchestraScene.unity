@@ -2917,6 +2917,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &807244025 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3190723785788061503, guid: 24565433a34af50cea13e96acd58466e, type: 3}
+  m_PrefabInstance: {fileID: 1462488855}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &846413161
 GameObject:
   m_ObjectHideFlags: 0
@@ -5859,7 +5864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a071f03b83ea6828f15a6987d4c008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graveDiggerAnimation: {fileID: 0}
+  graveDiggerAnimation: {fileID: 807244025}
   textComponent: {fileID: 1880545870}
   audioSource: {fileID: 1547282972}
   dialogue:
@@ -5927,7 +5932,7 @@ MonoBehaviour:
     seconds: 10
     dialogue: See, if you can pick some flowers.
   gameManager: {fileID: 226972591}
-  musicManager: {fileID: 0}
+  musicManager: {fileID: 1879418595}
   InitialSpawnGrave: {fileID: 2113703787}
 --- !u!82 &1547282972
 AudioSource:
