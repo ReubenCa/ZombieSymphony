@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDead()
     {
-        Debug.Log("THE PLAYER IS DEAD");
+        //Debug.Log("THE PLAYER IS DEAD");
     }
     public void onFlowerCollected()
     {

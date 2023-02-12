@@ -38,7 +38,7 @@ public class Zombie : MoveableEntity
         if(TimeSinceLastSleep>NextSleepTime && State ==MoveableEntityState.Idle)
         {
             State = MoveableEntityState.Sleeping;
-            Debug.Log("Calling Sleep Animation");
+           //Debug.Log("Calling Sleep Animation");
             PlayerAnimator.Play("ZombieSleeping");
             NextWakeUpTime = UnityEngine.Random.Range(MinTimeSleeping, MaxTimeSleeping);
         }
@@ -192,7 +192,7 @@ public class Zombie : MoveableEntity
 
         if (!Player.Instance.isBiting)
         {
-            Debug.Log("player not biting");
+           // Debug.Log("player not biting");
             return;
         }
         GameManager.instance.ZombieDied();

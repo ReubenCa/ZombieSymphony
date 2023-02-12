@@ -87,6 +87,7 @@ public class MusicManager : MonoBehaviour
         {
             minDistanceToBeat=Mathf.Min(minDistanceToBeat,Mathf.Abs(BeatPosition-actualBar));
         }
+        Debug.Log(minDistanceToBeat);
         Debug.Log(minDistanceToBeat < forgiveness ? "HIT" : "MISS");
         return minDistanceToBeat<forgiveness;
     }

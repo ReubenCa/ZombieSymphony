@@ -29,7 +29,7 @@ public class OrchestraZombie : MonoBehaviour
         spriteRenderer.sprite=normalSprite;
         float TimeElapsedSinceAudioStarted=Time.time-manager.audioStarted;
         float actualBar=(TimeElapsedSinceAudioStarted%manager.TimeIn8Bars)*8*1000/manager.TimeIn8Bars;
-        Debug.Log(actualBar);
+       //Debug.Log(actualBar);
         foreach (float BeatPosition in beatPositions.beatPositions)
         {
             if(BeatPosition<actualBar){
