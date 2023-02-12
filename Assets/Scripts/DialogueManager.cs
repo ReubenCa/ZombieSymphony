@@ -12,6 +12,7 @@ public class DialogueLine{
     
 public class DialogueManager : MonoBehaviour
 {
+    public Animator graveDiggerAnimation;
     public TextMeshPro textComponent;
     public AudioSource audioSource;
     public List<DialogueLine> dialogue;
@@ -42,6 +43,7 @@ public class DialogueManager : MonoBehaviour
         gameManager.SpawnFlowers=true;
         gameManager.SpawnZombies=true;
         gameObject.SetActive(false);
+        graveDiggerAnimation.Play("GraveDiggerLeave");
     }
     // Update is called once per frame
     void Update()

@@ -85,7 +85,7 @@ public class Player : MoveableEntity
             PlayerAnimator.Play("PlayerWalk");
             Zombie.PlayerX = x;
             Zombie.PlayerY = y;
-
+            GetComponent<AudioSource>().Play();
         }
 
        
