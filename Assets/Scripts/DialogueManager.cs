@@ -33,12 +33,18 @@ public class DialogueManager : MonoBehaviour
         gameManager.SpawnZombies=false;
         StartCoroutine(runDialogueFrom(PlayerPrefs.GetInt("tutorialphase",0))); //0 is Default
     }
+    IEnumerator runFirstPhaseInSecond(){
+        yield return new WaitForSeconds(0.1f);
+        musicManager.loadPhase(1);
+    }
     IEnumerator runDialogueFrom(int phase){
         int startDialogue=0;
         if(phase!=0){
-            if(phase==1){startDialogue=7;}
-            if(phase==2){startDialogue=12;musicManager.loadPhaseWhenReady(1);}
-            if(phase==3){startDialogue=19;musicManager.loadPhaseWhenReady(1);}
+            if(phase==1){startDialogue=7;
+            musicManager.loadPhase(1);
+            }
+            if(phase==2){startDialogue=12;StartCoroutine(runFirstPhaseInSecond());}
+            if(phase==3){startDialogue=19;StartCoroutine(runFirstPhaseInSecond());}
         }
         foreach (DialogueLine dialogueLine in dialogue.GetRange(startDialogue,dialogue.Count-startDialogue))
         {
@@ -59,8 +65,9 @@ public class DialogueManager : MonoBehaviour
             if(dialogueLine.dialogue.Contains("asleep")){
                 //firstZombie.goSleepForever();
             }
-            if(dialogueLine.dialogue.Contains(""))
+            Debug.Log("Seconds "+dialogueLine.seconds);
             yield return new WaitForSeconds(dialogueLine.seconds);
+            Debug.Log(dialogueLine.dialogue);
         }
         //ClearUp
         PlayerPrefs.SetInt("tutorialphase",3);

@@ -7406,6 +7406,7 @@ MonoBehaviour:
   audioStarted: 0
   TimeIn8Bars: 0
   offsetMillis: 0.04
+  audioSource: {fileID: 1879418594}
   ForgivenessDecayPerSecond: 0.004
   ForgivenessAsymptopicMinimum: 0.5
   CurrentForgiveness: 0
