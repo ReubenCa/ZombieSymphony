@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
         //SpawnFlower();
     }
     [SerializeField]
-    float Lives = 3f;
+   public float Lives = 3f;
     public void MoveNotOnBeat()
     {
         Lives -= 1;
@@ -48,9 +48,10 @@ public class GameManager : MonoBehaviour
     {
         if (ranout)
             return;
+        Lives = -10;
         ranout = true;
         foreach(Grave grave in AllGraves) { 
-        SpawnZombie(grave);
+        SpawnZombie(grave,1,1,1000,10000,1,1);
         }
     }
 
