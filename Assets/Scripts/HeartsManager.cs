@@ -1,19 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class HeartsManager : MonoBehaviour
 {
     [SerializeField]
     Heart[] Hearts;
 
-   /* [SerializeField]
-    float testlives;*/
+    public static HeartsManager instance;
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    /* [SerializeField]
+     float testlives;*/
     private void Update()
     {
         //UpdateHealth(testlives);
         UpdateHealth(GameManager.instance.Lives);
     }
+    public void OnLifeLost(float TotalHealth)
+    {
+        try
+        {
+            Hearts[(int)Math.Ceiling(TotalHealth % 1.0f)].PlayParticles();
+        }
+        catch {//In God mode theere may not be a heart to represent lost life
+               }
+    }
+
     public void UpdateHealth(float Health)
     {
         if (Health < 0)

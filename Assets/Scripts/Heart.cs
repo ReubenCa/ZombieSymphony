@@ -24,7 +24,7 @@ public class Heart : MonoBehaviour
     {
         particles.Stop();
     }
-    bool HasSomeHealth = true;
+    
     public void UpdateHealth(float health)
     {
        // Debug.Log(mask.gameObject.transform.position);
@@ -33,11 +33,12 @@ public class Heart : MonoBehaviour
             , Height, mask.gameObject.transform.localPosition.z);
       //  Debug.Log(mask.gameObject.transform.position);
 
-        if(HasSomeHealth && health <=0f)
-        {
-            particles.Play();
-        }
-        HasSomeHealth = health > 0f;
+  
+    }
+
+    public void PlayParticles()
+    {
+        particles.Play();
     }
 
 }
