@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Outdated/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 0
-    path: Assets/Scenes/ReubenWorkingScene.unity
-    guid: 59c2b7057c43ee540b57b503329e4c74
+    path: Assets/Scenes/OrchestraScene.unity
+    guid: fbab863196ed81442972da42053eabf9
+  - enabled: 1
+    path: Assets/Scenes/StartScene.unity
+    guid: 0db69e182d7ce8dc29d6e68b7c1a23bd
   - enabled: 1
     path: Assets/Scenes/DeathScene.unity
-    guid: bd20367288bf73a448e584003b818cdf
+    guid: 5035810ac385d3502a3b5fe613787942
   m_configObjects: {}
