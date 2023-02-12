@@ -25,11 +25,10 @@ public class MusicManager : MonoBehaviour
     [HideInInspector]
     public float TimeIn8Bars;
     public float offsetMillis;
-    private AudioSource audioSource;
+    public  AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {
-        audioSource=GetComponent<AudioSource>();
         TimeInBar=60000/(bpm/4); //In Millseconds
         TimeIn8Bars=TimeInBar*8;
         loadPhase(0);
@@ -63,6 +62,7 @@ public class MusicManager : MonoBehaviour
         if(newPhase==-1){
             newPhase=nextPhase;
         }
+        Debug.Log(newPhase);
         audioSource.clip=PhaseAudioClip[newPhase];
         audioSource.Play();
         audioStarted=Time.time;
