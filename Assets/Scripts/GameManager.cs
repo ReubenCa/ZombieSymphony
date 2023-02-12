@@ -117,18 +117,23 @@ public class GameManager : MonoBehaviour
     }
     [SerializeField]
     GameObject ZombiePrefab;
-    public Zombie SpawnZombie()
-    {
-        
-        Grave spawngrave = AllGraves[Random.Range(0, AllGraves.Count)];
-        return SpawnZombie(spawngrave);
-    }
 
-    public Zombie SpawnZombie(Grave spawngrave)
+
+    public Zombie SpawnZombie(Grave spawngrave = null, int TargetAccuracy = 2, int TargetUpdateFreq = 4, 
+        float MinTimetoSleep = 3, float MaxTimeToSleep = 30, float MaxTimeSleeping = 12, float minTimeSleeping = 7 )
     {
+        if (spawngrave == null)
+        {
+            spawngrave = AllGraves[Random.Range(0, AllGraves.Count)];
+        }
+
+
         ZombiesAlive++;
         GameObject zombie = Instantiate(ZombiePrefab, new Vector3((float)spawngrave.BottomLeftX, (float)spawngrave.BottomLeftY, 0), Quaternion.identity);
-            return zombie.GetComponent<Zombie>();
+        Zombie zombieComp =  zombie.GetComponent<Zombie>();
+        zombieComp.SetStats(MinTimetoSleep, MaxTimeToSleep,MaxTimeSleeping,minTimeSleeping,TargetAccuracy, TargetUpdateFreq);
+        return zombieComp;
+
         
     }
     

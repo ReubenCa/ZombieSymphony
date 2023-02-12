@@ -24,6 +24,16 @@ public class Zombie : MoveableEntity
     float MaxTimeSleeping;
     [SerializeField]
     int NoWakeUpDistance;
+    public void SetStats( float MinTimeToSleep, float MaxTimeToSleep, float MaxTimeSleeping, float MinTimeSleeping
+        , int TargetAccuracy, int TargetUpdateFreq)
+    {
+        this.MinTimeToSleep= MinTimeToSleep;
+        this.MaxTimeToSleep= MaxTimeToSleep;
+        this.MinTimeSleeping = MinTimeSleeping;
+        this.MaxTimeSleeping = MaxTimeSleeping;
+        this.TargetAccuracy = TargetAccuracy;
+        this.TargetUpdateFrequency = TargetUpdateFreq;
+    }
 
     float TimeSinceLastSleep = 0f;
     float TimeAsleep = 0f;
