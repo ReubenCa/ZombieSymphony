@@ -36,7 +36,7 @@ public class MusicManager : MonoBehaviour
     }
 
     IEnumerator callPhases(List<float> TimePerPhase){
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 5; i++)
         {
             Debug.Log("Waiting for: "+TimePerPhase[i]);
             yield return new WaitForSeconds(TimePerPhase[i]);
@@ -58,6 +58,7 @@ public class MusicManager : MonoBehaviour
         loadPhase(-1);
     }
 
+
     public void loadPhase(int newPhase){
         if(newPhase==-1){
             newPhase=nextPhase;
@@ -77,7 +78,8 @@ public class MusicManager : MonoBehaviour
 
     // Update is called once per frame
 
-
+    float totalmiss;
+    int totalattempts;
     public bool checkIfBeat(){
 
         float TimeElapsedSinceAudioStarted=Time.time-audioStarted;
@@ -86,9 +88,12 @@ public class MusicManager : MonoBehaviour
         foreach (float BeatPosition in PhaseBeatPositions[phase].beatPositions)
         {
             minDistanceToBeat=Mathf.Min(minDistanceToBeat,Mathf.Abs(BeatPosition-actualBar));
+            Debug.Log(-BeatPosition + actualBar);
         }
-        Debug.Log(minDistanceToBeat);
+        //Debug.Log(minDistanceToBeat);
         Debug.Log(minDistanceToBeat < forgiveness ? "HIT" : "MISS");
+
+        Debug.Log("");
         return minDistanceToBeat<forgiveness;
     }
 }
